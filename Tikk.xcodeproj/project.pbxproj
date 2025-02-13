@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		D73D85E02D5E65D800B2CD20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D73D85C52D5E65D500B2CD20 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D73D85CC2D5E65D500B2CD20;
+			remoteInfo = Tikk;
+		};
+		D73D85EA2D5E65D800B2CD20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D73D85C52D5E65D500B2CD20 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D73D85CC2D5E65D500B2CD20;
+			remoteInfo = Tikk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D73D85CD2D5E65D500B2CD20 /* Tikk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tikk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D73D85DF2D5E65D800B2CD20 /* TikkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TikkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D73D85E92D5E65D800B2CD20 /* TikkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TikkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D73D85CF2D5E65D500B2CD20 /* Tikk */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tikk;
+			sourceTree = "<group>";
+		};
+		D73D85E22D5E65D800B2CD20 /* TikkTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TikkTests;
+			sourceTree = "<group>";
+		};
+		D73D85EC2D5E65D800B2CD20 /* TikkUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TikkUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D73D85CA2D5E65D500B2CD20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73D85DC2D5E65D800B2CD20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73D85E62D5E65D800B2CD20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D73D85C42D5E65D500B2CD20 = {
+			isa = PBXGroup;
+			children = (
+				D73D85CF2D5E65D500B2CD20 /* Tikk */,
+				D73D85E22D5E65D800B2CD20 /* TikkTests */,
+				D73D85EC2D5E65D800B2CD20 /* TikkUITests */,
+				D73D85CE2D5E65D500B2CD20 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D73D85CE2D5E65D500B2CD20 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D73D85CD2D5E65D500B2CD20 /* Tikk.app */,
+				D73D85DF2D5E65D800B2CD20 /* TikkTests.xctest */,
+				D73D85E92D5E65D800B2CD20 /* TikkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D73D85CC2D5E65D500B2CD20 /* Tikk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D73D85F32D5E65D800B2CD20 /* Build configuration list for PBXNativeTarget "Tikk" */;
+			buildPhases = (
+				D73D85C92D5E65D500B2CD20 /* Sources */,
+				D73D85CA2D5E65D500B2CD20 /* Frameworks */,
+				D73D85CB2D5E65D500B2CD20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D73D85CF2D5E65D500B2CD20 /* Tikk */,
+			);
+			name = Tikk;
+			packageProductDependencies = (
+			);
+			productName = Tikk;
+			productReference = D73D85CD2D5E65D500B2CD20 /* Tikk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D73D85DE2D5E65D800B2CD20 /* TikkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D73D85F62D5E65D800B2CD20 /* Build configuration list for PBXNativeTarget "TikkTests" */;
+			buildPhases = (
+				D73D85DB2D5E65D800B2CD20 /* Sources */,
+				D73D85DC2D5E65D800B2CD20 /* Frameworks */,
+				D73D85DD2D5E65D800B2CD20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D73D85E12D5E65D800B2CD20 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D73D85E22D5E65D800B2CD20 /* TikkTests */,
+			);
+			name = TikkTests;
+			packageProductDependencies = (
+			);
+			productName = TikkTests;
+			productReference = D73D85DF2D5E65D800B2CD20 /* TikkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D73D85E82D5E65D800B2CD20 /* TikkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D73D85F92D5E65D800B2CD20 /* Build configuration list for PBXNativeTarget "TikkUITests" */;
+			buildPhases = (
+				D73D85E52D5E65D800B2CD20 /* Sources */,
+				D73D85E62D5E65D800B2CD20 /* Frameworks */,
+				D73D85E72D5E65D800B2CD20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D73D85EB2D5E65D800B2CD20 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D73D85EC2D5E65D800B2CD20 /* TikkUITests */,
+			);
+			name = TikkUITests;
+			packageProductDependencies = (
+			);
+			productName = TikkUITests;
+			productReference = D73D85E92D5E65D800B2CD20 /* TikkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D73D85C52D5E65D500B2CD20 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					D73D85CC2D5E65D500B2CD20 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					D73D85DE2D5E65D800B2CD20 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = D73D85CC2D5E65D500B2CD20;
+					};
+					D73D85E82D5E65D800B2CD20 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = D73D85CC2D5E65D500B2CD20;
+					};
+				};
+			};
+			buildConfigurationList = D73D85C82D5E65D500B2CD20 /* Build configuration list for PBXProject "Tikk" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D73D85C42D5E65D500B2CD20;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D73D85CE2D5E65D500B2CD20 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D73D85CC2D5E65D500B2CD20 /* Tikk */,
+				D73D85DE2D5E65D800B2CD20 /* TikkTests */,
+				D73D85E82D5E65D800B2CD20 /* TikkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D73D85CB2D5E65D500B2CD20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73D85DD2D5E65D800B2CD20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73D85E72D5E65D800B2CD20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D73D85C92D5E65D500B2CD20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73D85DB2D5E65D800B2CD20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D73D85E52D5E65D800B2CD20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D73D85E12D5E65D800B2CD20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D73D85CC2D5E65D500B2CD20 /* Tikk */;
+			targetProxy = D73D85E02D5E65D800B2CD20 /* PBXContainerItemProxy */;
+		};
+		D73D85EB2D5E65D800B2CD20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D73D85CC2D5E65D500B2CD20 /* Tikk */;
+			targetProxy = D73D85EA2D5E65D800B2CD20 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D73D85F12D5E65D800B2CD20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D73D85F22D5E65D800B2CD20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D73D85F42D5E65D800B2CD20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Tikk/Preview Content\"";
+				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = theodorbjornstad.Tikk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D73D85F52D5E65D800B2CD20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Tikk/Preview Content\"";
+				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = theodorbjornstad.Tikk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D73D85F72D5E65D800B2CD20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = theodorbjornstad.TikkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tikk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tikk";
+			};
+			name = Debug;
+		};
+		D73D85F82D5E65D800B2CD20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = theodorbjornstad.TikkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tikk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tikk";
+			};
+			name = Release;
+		};
+		D73D85FA2D5E65D800B2CD20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = theodorbjornstad.TikkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tikk;
+			};
+			name = Debug;
+		};
+		D73D85FB2D5E65D800B2CD20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = theodorbjornstad.TikkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Tikk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D73D85C82D5E65D500B2CD20 /* Build configuration list for PBXProject "Tikk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D73D85F12D5E65D800B2CD20 /* Debug */,
+				D73D85F22D5E65D800B2CD20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D73D85F32D5E65D800B2CD20 /* Build configuration list for PBXNativeTarget "Tikk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D73D85F42D5E65D800B2CD20 /* Debug */,
+				D73D85F52D5E65D800B2CD20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D73D85F62D5E65D800B2CD20 /* Build configuration list for PBXNativeTarget "TikkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D73D85F72D5E65D800B2CD20 /* Debug */,
+				D73D85F82D5E65D800B2CD20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D73D85F92D5E65D800B2CD20 /* Build configuration list for PBXNativeTarget "TikkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D73D85FA2D5E65D800B2CD20 /* Debug */,
+				D73D85FB2D5E65D800B2CD20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D73D85C52D5E65D500B2CD20 /* Project object */;
+}
