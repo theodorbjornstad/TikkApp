@@ -16,11 +16,10 @@ struct Todo: Identifiable, Equatable {
     var lastModified: Date
 
     init(
-        id: UUID,
         title: String,
         category: Category
     ) {
-        self.id = id
+        self.id = UUID()
         self.title = title
         self.isCompleted = false
         self.category = category

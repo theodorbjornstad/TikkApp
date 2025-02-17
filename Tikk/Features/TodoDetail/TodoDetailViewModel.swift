@@ -16,7 +16,7 @@ extension TodoDetailViewModel {
 @Observable
 class TodoDetailViewModel {
 
-    let placeholder: String = "Input new task here"
+    let placeholder: String = Asset.String.input_placeholder
     let availableCategories: [Category] = [.none, .personal, .work]
 
     var selectedText: String = ""
@@ -34,7 +34,6 @@ class TodoDetailViewModel {
         switch event {
         case .commit:
             onCommit(.init(
-                id: UUID(),
                 title: selectedText,
                 category: selectedCategory
             ))

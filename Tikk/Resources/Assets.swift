@@ -24,4 +24,8 @@ enum Asset {
         static let plus = "plus"
         static let checkmark = "checkmark"
     }
+    enum String {
+        static let input_placeholder = "Input new task here"
+        static let list_no_content = "No tasks? Guess you’ve mastered life"
+    }
 }

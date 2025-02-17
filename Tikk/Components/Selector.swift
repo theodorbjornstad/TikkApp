@@ -1,5 +1,5 @@
 //
-//  CategorySelector.swift
+//  Selector.swift
 //  Tikk
 //
 //  Created by Theodor Holmen Bjørnstad on 13/02/2025.
@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct CategorySelector: View {
-
+struct Selector: View {
     let availableCategories: [Category]
     @Binding var selectedCategory: Category
 
@@ -16,7 +15,7 @@ struct CategorySelector: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
                 ForEach(availableCategories) { category in
-                    CategoryPill(
+                    Pill(
                         title: category.title,
                         isSelected: category == selectedCategory
                     )
@@ -26,16 +25,5 @@ struct CategorySelector: View {
                 }
             }
         }
-    }
-}
-
-#Preview {
-    @Previewable @State var selectedCategory = Category.personal
-
-    VStack {
-        CategorySelector(
-            availableCategories: [.personal, .work],
-            selectedCategory: $selectedCategory
-        )
     }
 }

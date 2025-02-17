@@ -1,5 +1,5 @@
 //
-//  TodoCell.swift
+//  ListItem.swift
 //  Tikk
 //
 //  Created by Theodor Holmen Bjørnstad on 13/02/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListRow: View {
+struct ListItem: View {
 
     let title: String
     let category: Category
@@ -33,7 +33,7 @@ struct ListRow: View {
     }
 
     private var radioButton: some View {
-        RadioButton(isChecked: isChecked)
+        CheckButton(isChecked: isChecked)
             .onTapGesture {
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.6, blendDuration: 0)) {
                     onCheck()
@@ -49,17 +49,4 @@ struct ListRow: View {
             .scaleEffect(isChecked ? 0.95 : 1)
             .animation(.easeInOut(duration: 0.3), value: isChecked)
     }
-}
-
-
-#Preview {
-    @Previewable @State var todo = [Todo].dummy.first!
-
-    ListRow(
-        title: todo.title,
-        category: todo.category,
-        isChecked: todo.isCompleted,
-        onCheck: {}
-    )
-    .padding()
 }

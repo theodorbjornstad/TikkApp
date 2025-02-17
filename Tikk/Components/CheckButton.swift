@@ -1,5 +1,5 @@
 //
-//  RadioButton.swift
+//  CheckButton.swift
 //  Tikk
 //
 //  Created by Theodor Holmen Bjørnstad on 13/02/2025.
@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct RadioButton: View {
-
+struct CheckButton: View {
     let isChecked: Bool
 
     var body: some View {
@@ -39,11 +38,4 @@ struct RadioButton: View {
             .foregroundColor(.white)
             .transition(.scale)
     }
-}
-
-#Preview {
-    TodoListView(
-        apiService: APIServiceImp(),
-        databaseService: DatabaseServiceImp()
-    )
 }

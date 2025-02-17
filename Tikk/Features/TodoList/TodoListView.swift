@@ -35,15 +35,13 @@ struct TodoListView: View {
             }
         }
         .sheet(isPresented: $viewModel.showInputSheet) {
-            TodoDetailView(
-                onCommit: { viewModel.handleEvent(.commitItem($0)) }
-            )
-            .presentationDetents([.height(160), .medium])
+            TodoDetailView(onCommit: { viewModel.handleEvent(.commitItem($0)) })
+                .presentationDetents([.height(160), .medium])
         }
     }
 
     private var splashScreen: some View {
-        SplashScreen(oAnimationDidFinish: {
+        SplashScreen(onFinished: {
             Task {
                 try await Task.sleep(nanoseconds: 600_000_000)
                 hasPlayed = true
@@ -70,13 +68,13 @@ struct TodoListView: View {
                 .playing(loopMode: .loop)
                 .frame(width: 200, height: 200)
 
-            Text("No tasks? Guess you’ve mastered life")
+            Text(Asset.String.list_no_content)
                 .font(.callout)
         }
     }
 
     private var categorySelector: some View {
-        CategorySelector(
+        Selector(
             availableCategories: viewModel.availableCategories,
             selectedCategory: $viewModel.selectedCategory
         )
@@ -89,7 +87,7 @@ struct TodoListView: View {
         } else {
             ScrollView {
                 ForEach(viewModel.selectedItems) { item in
-                    ListRow(
+                    ListItem(
                         title: item.title,
                         category: item.category,
                         isChecked: item.isCompleted,
@@ -113,8 +111,4 @@ struct TodoListView: View {
             }
         }
     }
-}
-
-#Preview {
-    TodoListView(apiService: APIServiceImp(), databaseService: DatabaseServiceImp())
 }

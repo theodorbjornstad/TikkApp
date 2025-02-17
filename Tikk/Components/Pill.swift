@@ -1,5 +1,5 @@
 //
-//  CategoryPill.swift
+//  Pill.swift
 //  Tikk
 //
 //  Created by Theodor Holmen Bjørnstad on 17/02/2025.
@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct CategoryPill: View {
-
+struct Pill: View {
     let title: String
     let isSelected: Bool
 

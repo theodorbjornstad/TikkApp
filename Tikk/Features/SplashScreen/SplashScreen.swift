@@ -9,14 +9,13 @@ import Lottie
 import SwiftUI
 
 struct SplashScreen: View {
-
-    let oAnimationDidFinish: () -> Void
+    let onFinished: () -> Void
 
     var body: some View {
         LottieView(animation: .named(Asset.Animation.splashScreen))
             .playing()
             .animationDidFinish { _ in
-                oAnimationDidFinish()
+                onFinished()
             }
     }
 }

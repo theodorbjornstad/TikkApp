@@ -39,20 +39,8 @@ class DatabaseServiceImp: DatabaseService {
 
 extension [Todo] {
     static let dummy: Self = [
-        .init(
-            id: UUID(),
-            title: "UI Design",
-            category: .work
-        ),
-        .init(
-            id: UUID(),
-            title: "Web Development",
-            category: .personal
-        ),
-        .init(
-            id: UUID(),
-            title: "Office Meeting",
-            category: .work
-        )
+        .init(title: "UI Design", category: .work),
+        .init(title: "Web Development", category: .personal),
+        .init(title: "Office Meeting", category: .work)
     ]
 }
