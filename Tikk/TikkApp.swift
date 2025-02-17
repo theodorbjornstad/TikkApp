@@ -10,23 +10,16 @@ import SwiftData
 
 @main
 struct TikkApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    let databaseService = DatabaseServiceImp()
+    let apiService = APIServiceImp()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TodoListView(
+                apiService: apiService,
+                databaseService: databaseService
+            )
         }
-        .modelContainer(sharedModelContainer)
     }
 }
