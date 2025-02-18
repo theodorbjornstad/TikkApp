@@ -50,7 +50,10 @@ extension TodoListViewModel {
 private extension TodoListViewModel {
     func loadItems() {
         Task {
-            self.items = todoRepository.fetch()
+            for await items in todoRepository.fetch() {
+                self.items = items
+                print("ℹ️ Received list in viewModel: \(items)")
+            }
         }
     }
 

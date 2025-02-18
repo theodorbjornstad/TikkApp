@@ -12,10 +12,10 @@ protocol DatabaseService {
     func fetchTodos() -> [Todo]
     func addTodo(_ todo: Todo)
 	func saveTodo(_ todo: Todo)
+    func overwrite(_ todos: [Todo])
 }
 
 class DatabaseServiceImp: DatabaseService {
-
 
     // MARK: This is database data
     var todos: [Todo] = .dummy
@@ -34,6 +34,10 @@ class DatabaseServiceImp: DatabaseService {
         if let index = todos.firstIndex(where: { $0.id == todo.id }) {
             todos[index] = todo
         }
+    }
+
+    func overwrite(_ todos: [Todo]) {
+        self.todos = todos
     }
 }
 
