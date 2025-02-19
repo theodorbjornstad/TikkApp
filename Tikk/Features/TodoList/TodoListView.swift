@@ -52,7 +52,6 @@ struct TodoListView: View {
     private var content: some View {
         ZStack {
             VStack(alignment: .center, spacing: 16) {
-                categorySelector
                 list
                 Spacer()
             }
@@ -60,6 +59,8 @@ struct TodoListView: View {
         }
         .padding(16)
         .background(Asset.Color.background)
+        .navigationBarTitle("My To-Do List", displayMode: .inline)
+        .toolbar { refreshButton }
     }
 
     var emptyState: some View {
@@ -73,23 +74,23 @@ struct TodoListView: View {
         }
     }
 
-    private var categorySelector: some View {
-        Selector(
-            availableCategories: viewModel.availableCategories,
-            selectedCategory: $viewModel.selectedCategory
-        )
+    var refreshButton: some View {
+        Button(action: { viewModel.handleEvent(.refresh) }) {
+            Image(systemName: "arrow.clockwise.circle.fill")
+                .font(.title)
+                .foregroundColor(.blue)
+        }
     }
 
     @ViewBuilder
     private var list: some View {
-        if viewModel.selectedItems.isEmpty {
+        if viewModel.items.isEmpty {
             emptyState
         } else {
             ScrollView {
-                ForEach(viewModel.selectedItems) { item in
+                ForEach(viewModel.items) { item in
                     ListItem(
                         title: item.title,
-                        category: .none, // item.category,
                         isChecked: item.isCompleted,
                         onCheck: { viewModel.handleEvent(.toggleCompleted(item)) }
                     )

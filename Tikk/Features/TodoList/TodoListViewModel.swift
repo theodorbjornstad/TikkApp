@@ -5,10 +5,12 @@
 //  Created by Theodor Holmen Bjørnstad on 13/02/2025.
 //
 
+import GRDB
 import SwiftUI
 
 extension TodoListViewModel {
     enum InteractionEvent {
+        case refresh
         case addItem(_ item: Todo)
         case createItem
         case commitItem(_ item: Todo)
@@ -19,10 +21,7 @@ extension TodoListViewModel {
 @Observable class TodoListViewModel {
 
     var showInputSheet: Bool = false
-    var selectedCategory: Category = .all
-    var availableCategories: [Category] = [.all, .personal, .work]
-
-    private var items: [Todo] = []
+    var items: [Todo] = []
     private let todoRepository: TodoRepository
 
     init(todoRepository: TodoRepository) {
@@ -39,11 +38,9 @@ extension TodoListViewModel {
             onToggleCompleted(item)
         case .commitItem(let item):
             onCommitItem(item)
+        case .refresh:
+            onRefresh()
         }
-    }
-
-    var selectedItems: [Todo] {
-        items.filter { _ in selectedCategory == .all } // || $0.category.title == selectedCategory.title } // TODO: Fix comparrison
     }
 }
 
@@ -52,14 +49,14 @@ private extension TodoListViewModel {
         Task {
             for await items in todoRepository.fetch() {
                 self.items = items
-                print("ℹ️ Received list in viewModel: \(items)")
             }
+            print("ℹ️ Received list in viewModel: \(items)")
         }
     }
 
     func onAddItem(_ item: Todo) {
         Task {
-            try await todoRepository.add(item)
+            try await todoRepository.save(item)
         }
     }
 
@@ -69,7 +66,14 @@ private extension TodoListViewModel {
             items[index].isCompleted.toggle()
         }
         Task {
-            try await todoRepository.update(items[index])
+            try await todoRepository.save(items[index])
+        }
+    }
+
+    func onRefresh() {
+        Task {
+            try await todoRepository.sync()
+            items = try todoRepository.fetch()
         }
     }
 
@@ -82,7 +86,7 @@ private extension TodoListViewModel {
         showInputSheet = false
 
         Task {
-            try await todoRepository.add(item)
+            try await todoRepository.save(item)
         }
     }
 }

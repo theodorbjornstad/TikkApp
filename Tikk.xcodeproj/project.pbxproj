@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		D715CA6E2D66164400D62E48 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA6D2D66164400D62E48 /* GRDB */; };
+		D715CA762D664B4300D62E48 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA752D664B4300D62E48 /* FirebaseAuth */; };
+		D715CA782D664B4300D62E48 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA772D664B4300D62E48 /* FirebaseFirestore */; };
+		D715CA7A2D664B4300D62E48 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA792D664B4300D62E48 /* FirebaseFirestoreCombine-Community */; };
 		D754F6382D5EADE400086ABF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D754F6372D5EADE400086ABF /* Lottie */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +56,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D754F6382D5EADE400086ABF /* Lottie in Frameworks */,
+				D715CA782D664B4300D62E48 /* FirebaseFirestore in Frameworks */,
+				D715CA762D664B4300D62E48 /* FirebaseAuth in Frameworks */,
+				D715CA7A2D664B4300D62E48 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				D715CA6E2D66164400D62E48 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,6 +121,9 @@
 			packageProductDependencies = (
 				D754F6372D5EADE400086ABF /* Lottie */,
 				D715CA6D2D66164400D62E48 /* GRDB */,
+				D715CA752D664B4300D62E48 /* FirebaseAuth */,
+				D715CA772D664B4300D62E48 /* FirebaseFirestore */,
+				D715CA792D664B4300D62E48 /* FirebaseFirestoreCombine-Community */,
 			);
 			productName = Tikk;
 			productReference = D73D85CD2D5E65D500B2CD20 /* Tikk.app */;
@@ -198,6 +207,7 @@
 			packageReferences = (
 				D754F6362D5EADE400086ABF /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */,
+				D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D73D85CE2D5E65D500B2CD20 /* Products */;
@@ -398,7 +408,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -426,7 +436,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8GB3FNMLJJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -570,6 +580,14 @@
 				kind = branch;
 			};
 		};
+		D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.7.0;
+			};
+		};
 		D754F6362D5EADE400086ABF /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -585,6 +603,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */;
 			productName = GRDB;
+		};
+		D715CA752D664B4300D62E48 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		D715CA772D664B4300D62E48 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		D715CA792D664B4300D62E48 /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
 		};
 		D754F6372D5EADE400086ABF /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -17,17 +17,13 @@ extension TodoDetailViewModel {
 class TodoDetailViewModel {
 
     let placeholder: String = Asset.String.input_placeholder
-    let availableCategories: [Category] = [.none, .personal, .work]
-
     var selectedText: String = ""
-    var selectedCategory: Category
 
     private let onCommit: (Todo) -> Void
 
     init(onCommit: @escaping (Todo) -> Void) {
         self.onCommit = onCommit
         self.selectedText = ""
-        self.selectedCategory = .none
     }
 
     func handleEvent(_ event: InteractionEvent) {
@@ -35,9 +31,8 @@ class TodoDetailViewModel {
         case .commit:
             onCommit(.init(
                 title: selectedText,
-                categoryId: "", // selectedCategory.id,
                 isCompleted: false,
-                needsSync: true,
+                syncStatus: .pending,
                 lastModified: .now
             ))
         }

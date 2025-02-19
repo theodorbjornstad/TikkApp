@@ -61,26 +61,19 @@ extension GRDBClient {
         migrator.eraseDatabaseOnSchemaChange = true
         #endif
         migrator.registerMigration("v1") { db in
-            try createRecipeTable(db)
-            // try seedCategoryTable(db)
+            try createTodoTable(db)
         }
         return migrator
     }
 
-    private func createRecipeTable(_ db: GRDB.Database) throws {
-        try db.create(table: "todo", ifNotExists: true) { t in
+    private func createTodoTable(_ db: GRDB.Database) throws {
+        try db.create(table: "todo") { t in
             t.autoIncrementedPrimaryKey("id")
+            t.column("remoteId", .text).unique()
             t.column("title", .text).notNull()
-            t.column("categoryId", .text)
-            t.column("isCompleted", .boolean).notNull().defaults(to: false)
-            t.column("needsSync", .boolean).notNull().defaults(to: true)
+            t.column("isCompleted", .boolean).notNull()
+            t.column("syncStatus", .blob).notNull()
             t.column("lastModified", .datetime).notNull()
         }
-    }
-
-    private func seedCategoryTable(_ db: GRDB.Database) throws {
-        // _ = try Recipe.sourdoughBaguettes.saved(db)
-        // _ = try Recipe.overnightPizzaDough.saved(db)
-        // _ = try Recipe.sourdoughHamburgerBuns.saved(db)
     }
 }

@@ -9,8 +9,9 @@ import SwiftUI
 
 protocol TodoRepository {
     func fetch() -> AsyncStream<[Todo]>
-    func add(_ todo: Todo) async throws
-    func update(_ todo: Todo) async throws
+    func fetch() throws -> [Todo]
+    func save(_ todo: Todo) async throws
+    func sync() async throws
 }
 
 class TodoRepositoryImp: TodoRepository {
@@ -24,95 +25,88 @@ class TodoRepositoryImp: TodoRepository {
     }
 
     func fetch() -> AsyncStream<[Todo]> {
-        AsyncStream { continuation in
+        AsyncStream { stream in
             Task {
-                let localTodos = try databaseService.fetchTodos()
-                continuation.yield(localTodos)
-
-                // try await syncWithRemote()
-                // 
-                // if let remoteTodos = try? await fetchFromRemoteAndUpdateLocal() {
-                //     continuation.yield(remoteTodos)
-                // }
-                continuation.finish()
+                defer { stream.finish() }
+                do {
+                    let localTodos = try databaseService.fetchTodos()
+                    stream.yield(localTodos)
+                    try await sync()
+                    let updatedTodos = try databaseService.fetchTodos()
+                    stream.yield(updatedTodos)
+                } catch {
+                    print("❌ Error fetching todos: \(error)")
+                }
             }
         }
     }
 
-
-    func update(_ todo: Todo) async throws {
-        var cpy = todo
-        cpy.lastModified = .now
-        cpy.needsSync = true
-
-        try databaseService.saveTodo(cpy)
-        // try? await syncItem(cpy)
+    func fetch() throws -> [Todo] {
+        try databaseService.fetchTodos()
     }
 
-    func add(_ todo: Todo) async throws {
+    func save(_ todo: Todo) async throws {
         var cpy = todo
         cpy.lastModified = .now
-        cpy.needsSync = true
+        cpy.syncStatus = .pending
+        try databaseService.saveTodo(cpy)
+    }
 
-        try databaseService.addTodo(cpy)
-        // try? await syncItem(cpy)
+    func sync() async throws {
+        print("🔄 Triggering sync...")
+        await pullServerChanges()
+        await pushPendingTodos()
     }
 }
 
 private extension TodoRepositoryImp {
 
-    func fetchFromRemoteAndUpdateLocal() async throws -> [Todo] {
-        let remoteList = try await apiService.fetchTodos()
-        let localList = try databaseService.fetchTodos()
-        let mergedList = merge(localList: localList, remoteList: remoteList)
-        try databaseService.overwrite(mergedList)
-        return mergedList
-    }
+    private func pullServerChanges() async {
+        do {
+            let lastSyncTimestamp = databaseService.fetchLastSync()
+            let serverTodos = try await apiService.fetchTodos(lastSyncTimestamp: lastSyncTimestamp)
+            let localTodos = try databaseService.fetchTodos()
 
-    func resolveConflict(local: Todo, remote: Todo) -> Todo {
-        if local.lastModified > remote.lastModified {
-            return local
-        } else {
-            return remote
-        }
-    }
-
-    func merge(localList: [Todo], remoteList: [Todo]) -> [Todo] {
-        var todoMap = Dictionary(uniqueKeysWithValues: localList.map { ($0.id, $0) })
-
-        for remoteItem in remoteList {
-            if let localItem = todoMap[remoteItem.id] {
-                todoMap[remoteItem.id] = resolveConflict(local: localItem, remote: remoteItem)
-            } else {
-                todoMap[remoteItem.id] = remoteItem
+            for serverTodo in serverTodos {
+                if let localTodo = localTodos.first(where: { $0.remoteId == serverTodo.remoteId }) {
+                    // Conflict resolution: last write wins
+                    print("🔀 serverTodo: \(serverTodo.lastModified)  localTodo: \(localTodo.lastModified)")
+                    if serverTodo.lastModified > localTodo.lastModified {
+                        var syncedTodo = serverTodo
+                        syncedTodo.id = localTodo.id
+                        syncedTodo.syncStatus = .synced
+                        print("🔀 Inserting todo from server after conflict resolution")
+                        try databaseService.saveTodo(syncedTodo)
+                    }
+                } else {
+                    print("⬇️ Inserting todo from server")
+                    try databaseService.saveTodo(serverTodo)
+                }
             }
+        } catch {
+            print("❌ Error during merging local and server data: \(error)")
         }
-        return Array(todoMap.values)
     }
 
-    func syncWithRemote() async throws {
-        let itemsToSync = try databaseService
-            .fetchTodos()
-            .filter(\.needsSync)
+    func pushPendingTodos() async {
+        do {
+            let pendingTodos = try databaseService.fetchPendingTodos()
 
-        // Perform sync in parallel
-         await withTaskGroup(of: Void.self) { group in
-             for item in itemsToSync {
-                 group.addTask {
-                     do {
-                         try await self.syncItem(item)
-                     } catch {
-                         print("⚠️ Failed to sync item \(item.id): \(error)")
-                     }
-                 }
-             }
-         }
-    }
+            for todo in pendingTodos {
+                print("⬆️ Pushing pending todo to server: \(todo)")
 
-    func syncItem(_ item: Todo) async throws {
-        try await apiService.updateTodo(item) // MARK: PUT vs POST?
-        var cpy = item
-        cpy.needsSync = false
-        try databaseService.saveTodo(cpy)
+                var syncedTodo = todo
+                if syncedTodo.remoteId == nil {
+                    let remoteId = try await apiService.addTodo(todo)
+                    syncedTodo.remoteId = remoteId
+                } else {
+                    try await apiService.saveTodo(todo)
+                }
+                syncedTodo.syncStatus = .synced
+                try databaseService.saveTodo(syncedTodo)
+            }
+        } catch {
+            print("❌ Error syncing pending todos to Firestore: \(error)")
+        }
     }
 }

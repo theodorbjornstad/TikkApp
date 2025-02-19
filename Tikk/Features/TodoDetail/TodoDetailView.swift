@@ -30,7 +30,6 @@ struct TodoDetailView: View {
 
     var footer: some View {
         HStack {
-            picker
             Spacer()
 
             // TODO: Add state
@@ -42,26 +41,26 @@ struct TodoDetailView: View {
         }
     }
 
-    var picker: some View {
-        Menu {
-            Picker(
-                selection: $viewModel.selectedCategory,
-                label: EmptyView(),
-                content: {
-                    ForEach(viewModel.availableCategories, id: \.id) {
-                        Text($0.title)
-                            .tag($0)
-                    }
-                }
-            )
-            .pickerStyle(.automatic)
-        } label: {
-            Tag(
-                title: viewModel.selectedCategory.title,
-                color: viewModel.selectedCategory.color
-            )
-        }
-    }
+    // var picker: some View {
+    //     Menu {
+    //         Picker(
+    //             selection: $viewModel.selectedCategory,
+    //             label: EmptyView(),
+    //             content: {
+    //                 ForEach(viewModel.availableCategories, id: \.id) {
+    //                     Text($0.title)
+    //                         .tag($0)
+    //                 }
+    //             }
+    //         )
+    //         .pickerStyle(.automatic)
+    //     } label: {
+    //         Tag(
+    //             title: viewModel.selectedCategory.title,
+    //             color: viewModel.selectedCategory.color
+    //         )
+    //     }
+    // }
 }
 
 #Preview {

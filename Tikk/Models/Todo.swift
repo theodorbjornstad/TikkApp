@@ -8,15 +8,25 @@
 import Foundation
 import GRDB
 
-struct Todo: Codable, Identifiable, Equatable {
-    var id: Int64?
-    var title: String
-    let categoryId: String?
-    var isCompleted: Bool
-    var needsSync: Bool
-    var lastModified: Date
+enum SyncStatus: String, Codable {
+    case synced, pending
 }
 
 
+// TODO: remove identifiable
+struct Todo: Identifiable, Equatable {
+    var id: Int64?
+    var remoteId: String?
+    var title: String
+    var isCompleted: Bool
+    var syncStatus: SyncStatus
+    var lastModified: Date
+}
+
 // TODO: Move
-extension Todo: FetchableRecord, PersistableRecord {}
+extension Todo: Codable, FetchableRecord, MutablePersistableRecord {
+    // Update auto-incremented id upon successful insertion
+    mutating func didInsert(_ inserted: InsertionSuccess) {
+        id = inserted.rowID
+    }
+}

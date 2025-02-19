@@ -10,7 +10,7 @@ import SwiftUI
 struct ListItem: View {
 
     let title: String
-    let category: Category
+    // let category: Category
     var isChecked: Bool
     let onCheck: () -> Void
 
@@ -20,9 +20,9 @@ struct ListItem: View {
             titleItem
             Spacer()
 
-            if category != .none {
-                Tag(title: category.title, color: category.color)
-            }
+            // if category != .none {
+            //     Tag(title: category.title, color: category.color)
+            // }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 16)
