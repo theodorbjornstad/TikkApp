@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D715CA6E2D66164400D62E48 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA6D2D66164400D62E48 /* GRDB */; };
 		D754F6382D5EADE400086ABF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D754F6372D5EADE400086ABF /* Lottie */; };
 /* End PBXBuildFile section */
 
@@ -44,11 +45,6 @@
 			path = TikkTests;
 			sourceTree = "<group>";
 		};
-		D73D85EC2D5E65D800B2CD20 /* TikkUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TikkUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D754F6382D5EADE400086ABF /* Lottie in Frameworks */,
+				D715CA6E2D66164400D62E48 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +79,6 @@
 			children = (
 				D73D85CF2D5E65D500B2CD20 /* Tikk */,
 				D73D85E22D5E65D800B2CD20 /* TikkTests */,
-				D73D85EC2D5E65D800B2CD20 /* TikkUITests */,
 				D73D85CE2D5E65D500B2CD20 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +114,7 @@
 			name = Tikk;
 			packageProductDependencies = (
 				D754F6372D5EADE400086ABF /* Lottie */,
+				D715CA6D2D66164400D62E48 /* GRDB */,
 			);
 			productName = Tikk;
 			productReference = D73D85CD2D5E65D500B2CD20 /* Tikk.app */;
@@ -158,9 +155,6 @@
 			);
 			dependencies = (
 				D73D85EB2D5E65D800B2CD20 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				D73D85EC2D5E65D800B2CD20 /* TikkUITests */,
 			);
 			name = TikkUITests;
 			packageProductDependencies = (
@@ -203,6 +197,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D754F6362D5EADE400086ABF /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D73D85CE2D5E65D500B2CD20 /* Products */;
@@ -567,6 +562,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		D754F6362D5EADE400086ABF /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -578,6 +581,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D715CA6D2D66164400D62E48 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
+		};
 		D754F6372D5EADE400086ABF /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D754F6362D5EADE400086ABF /* XCRemoteSwiftPackageReference "lottie-spm" */;

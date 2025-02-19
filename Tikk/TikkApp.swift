@@ -11,7 +11,7 @@ import SwiftData
 @main
 struct TikkApp: App {
 
-    let databaseService = DatabaseServiceImp()
+    let databaseService = DatabaseServiceImp(databaseClient: .persistent)
     let apiService = APIServiceImp()
 
     var body: some Scene {

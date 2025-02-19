@@ -35,7 +35,10 @@ class TodoDetailViewModel {
         case .commit:
             onCommit(.init(
                 title: selectedText,
-                category: selectedCategory
+                categoryId: "", // selectedCategory.id,
+                isCompleted: false,
+                needsSync: true,
+                lastModified: .now
             ))
         }
     }

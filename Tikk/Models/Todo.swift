@@ -6,24 +6,17 @@
 //
 
 import Foundation
+import GRDB
 
-struct Todo: Identifiable, Equatable {
-    let id: UUID
+struct Todo: Codable, Identifiable, Equatable {
+    var id: Int64?
     var title: String
-    let category: Category
+    let categoryId: String?
     var isCompleted: Bool
     var needsSync: Bool
     var lastModified: Date
-
-    init(
-        title: String,
-        category: Category
-    ) {
-        self.id = UUID()
-        self.title = title
-        self.isCompleted = false
-        self.category = category
-        self.needsSync = true
-        self.lastModified = .now
-    }
 }
+
+
+// TODO: Move
+extension Todo: FetchableRecord, PersistableRecord {}

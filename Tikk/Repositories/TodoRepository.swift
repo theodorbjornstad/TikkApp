@@ -9,8 +9,8 @@ import SwiftUI
 
 protocol TodoRepository {
     func fetch() -> AsyncStream<[Todo]>
-    func add(_ todo: Todo) async
-    func update(_ todo: Todo) async
+    func add(_ todo: Todo) async throws
+    func update(_ todo: Todo) async throws
 }
 
 class TodoRepositoryImp: TodoRepository {
@@ -26,36 +26,36 @@ class TodoRepositoryImp: TodoRepository {
     func fetch() -> AsyncStream<[Todo]> {
         AsyncStream { continuation in
             Task {
-                let localTodos = databaseService.fetchTodos()
+                let localTodos = try databaseService.fetchTodos()
                 continuation.yield(localTodos)
 
-                await syncWithRemote()
-
-                if let remoteTodos = try? await fetchFromRemoteAndUpdateLocal() {
-                    continuation.yield(remoteTodos)
-                }
+                // try await syncWithRemote()
+                // 
+                // if let remoteTodos = try? await fetchFromRemoteAndUpdateLocal() {
+                //     continuation.yield(remoteTodos)
+                // }
                 continuation.finish()
             }
         }
     }
 
 
-    func update(_ todo: Todo) async {
+    func update(_ todo: Todo) async throws {
         var cpy = todo
         cpy.lastModified = .now
         cpy.needsSync = true
 
-        databaseService.saveTodo(cpy)
-        try? await syncItem(cpy)
+        try databaseService.saveTodo(cpy)
+        // try? await syncItem(cpy)
     }
 
-    func add(_ todo: Todo) async {
+    func add(_ todo: Todo) async throws {
         var cpy = todo
         cpy.lastModified = .now
         cpy.needsSync = true
 
-        databaseService.addTodo(cpy)
-        try? await syncItem(cpy)
+        try databaseService.addTodo(cpy)
+        // try? await syncItem(cpy)
     }
 }
 
@@ -63,9 +63,9 @@ private extension TodoRepositoryImp {
 
     func fetchFromRemoteAndUpdateLocal() async throws -> [Todo] {
         let remoteList = try await apiService.fetchTodos()
-        let localList = databaseService.fetchTodos()
+        let localList = try databaseService.fetchTodos()
         let mergedList = merge(localList: localList, remoteList: remoteList)
-        databaseService.overwrite(mergedList)
+        try databaseService.overwrite(mergedList)
         return mergedList
     }
 
@@ -90,8 +90,8 @@ private extension TodoRepositoryImp {
         return Array(todoMap.values)
     }
 
-    func syncWithRemote() async {
-        let itemsToSync = databaseService
+    func syncWithRemote() async throws {
+        let itemsToSync = try databaseService
             .fetchTodos()
             .filter(\.needsSync)
 
@@ -113,6 +113,6 @@ private extension TodoRepositoryImp {
         try await apiService.updateTodo(item) // MARK: PUT vs POST?
         var cpy = item
         cpy.needsSync = false
-        databaseService.saveTodo(cpy)
+        try databaseService.saveTodo(cpy)
     }
 }

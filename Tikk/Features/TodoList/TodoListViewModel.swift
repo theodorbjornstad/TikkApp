@@ -12,7 +12,7 @@ extension TodoListViewModel {
         case addItem(_ item: Todo)
         case createItem
         case commitItem(_ item: Todo)
-        case markCompleted(_ item: Todo)
+        case toggleCompleted(_ item: Todo)
     }
 }
 
@@ -35,15 +35,15 @@ extension TodoListViewModel {
         case .addItem(let item): onAddItem(item)
         case .createItem:
             onCreateItem()
-        case .markCompleted(let item):
-            onMarkCompleted(item)
+        case .toggleCompleted(let item):
+            onToggleCompleted(item)
         case .commitItem(let item):
             onCommitItem(item)
         }
     }
 
     var selectedItems: [Todo] {
-        items.filter { selectedCategory == .all || $0.category == selectedCategory }
+        items.filter { _ in selectedCategory == .all } // || $0.category.title == selectedCategory.title } // TODO: Fix comparrison
     }
 }
 
@@ -59,17 +59,17 @@ private extension TodoListViewModel {
 
     func onAddItem(_ item: Todo) {
         Task {
-            await todoRepository.add(item)
+            try await todoRepository.add(item)
         }
     }
 
-    func onMarkCompleted(_ todo: Todo) {
+    func onToggleCompleted(_ todo: Todo) {
+        guard let index = items.firstIndex(of: todo) else { return }
         withAnimation {
-            guard let index = items.firstIndex(of: todo) else { return }
             items[index].isCompleted.toggle()
         }
         Task {
-            await todoRepository.update(todo)
+            try await todoRepository.update(items[index])
         }
     }
 
@@ -82,7 +82,7 @@ private extension TodoListViewModel {
         showInputSheet = false
 
         Task {
-            await todoRepository.add(item)
+            try await todoRepository.add(item)
         }
     }
 }

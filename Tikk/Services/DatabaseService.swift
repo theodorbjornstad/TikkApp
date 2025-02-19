@@ -6,45 +6,62 @@
 //
 
 import SwiftUI
-import SwiftData
+import GRDB
 
 protocol DatabaseService {
-    func fetchTodos() -> [Todo]
-    func addTodo(_ todo: Todo)
-	func saveTodo(_ todo: Todo)
-    func overwrite(_ todos: [Todo])
+    func fetchTodos() throws -> [Todo]
+    func addTodo(_ todo: Todo) throws
+	func saveTodo(_ todo: Todo) throws
+    func overwrite(_ todos: [Todo]) throws
 }
 
-class DatabaseServiceImp: DatabaseService {
+struct DatabaseServiceImp: DatabaseService {
 
-    // MARK: This is database data
-    var todos: [Todo] = .dummy
+    let databaseClient: GRDBClient
 
-    func fetchTodos() -> [Todo] {
-        return todos
+    init(databaseClient: GRDBClient) {
+        self.databaseClient = databaseClient
     }
 
-    func addTodo(_ todo: Todo) {
-        todos.append(todo)
-    }
 
-    func saveTodo(_ todo: Todo) {
-        // TODO: Implement actual db - this is only temporary
-        print("[DatabaseService] updating todo with title: \(todo.title) isCompleted: \(todo.isCompleted) needsSync: \(todo.needsSync)")
-        if let index = todos.firstIndex(where: { $0.id == todo.id }) {
-            todos[index] = todo
+    func fetchTodos() throws -> [Todo] {
+        try databaseClient.reader.read { db in
+            try Todo.fetchAll(db)
         }
     }
 
-    func overwrite(_ todos: [Todo]) {
-        self.todos = todos
+    func addTodo(_ todo: Todo) throws {
+        try databaseClient.writer.write { db in
+            try todo.insert(db)
+        }
+    }
+
+    func saveTodo(_ todo: Todo) throws {
+        try databaseClient.writer.write { db in
+            try todo.update(db)
+        }
+    }
+
+    func deleteTodo(_ todo: Todo) throws {
+        try databaseClient.writer.write { db in
+            _ = try todo.delete(db)
+        }
+    }
+
+    func overwrite(_ todos: [Todo]) throws {
+        try databaseClient.writer.write { db in
+            _ = try Todo.deleteAll(db)
+            try todos.forEach { todo in
+                try todo.insert(db)
+            }
+        }
     }
 }
 
 extension [Todo] {
     static let dummy: Self = [
-        .init(title: "UI Design", category: .work),
-        .init(title: "Web Development", category: .personal),
-        .init(title: "Office Meeting", category: .work)
+        // .init(title: "UI Design", category: .work, isCompleted: false, needsSync: true, lastModified: .now) // ,
+        // .init(title: "Web Development", category: .personal),
+        // .init(title: "Office Meeting", category: .work)
     ]
 }

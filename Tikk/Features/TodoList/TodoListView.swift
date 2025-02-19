@@ -89,9 +89,9 @@ struct TodoListView: View {
                 ForEach(viewModel.selectedItems) { item in
                     ListItem(
                         title: item.title,
-                        category: item.category,
+                        category: .none, // item.category,
                         isChecked: item.isCompleted,
-                        onCheck: { viewModel.handleEvent(.markCompleted(item)) }
+                        onCheck: { viewModel.handleEvent(.toggleCompleted(item)) }
                     )
                 }
             }
