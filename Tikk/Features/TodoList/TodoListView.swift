@@ -34,9 +34,12 @@ struct TodoListView: View {
                 splashScreen
             }
         }
-        .sheet(isPresented: $viewModel.showInputSheet) {
-            TodoDetailView(onCommit: { viewModel.handleEvent(.commitItem($0)) })
-                .presentationDetents([.height(160), .medium])
+        .sheet(item: $viewModel.showInputSheet) { item in
+            TodoDetailView(
+                item: item,
+                onCommit: { viewModel.handleEvent(.commitItem($0)) }
+            )
+            .presentationDetents([.height(160), .medium])
         }
     }
 
@@ -88,12 +91,13 @@ struct TodoListView: View {
             emptyState
         } else {
             ScrollView {
-                ForEach(viewModel.items) { item in
+                ForEach(viewModel.items, id: \.id) { item in
                     ListItem(
                         title: item.title,
                         isChecked: item.isCompleted,
                         onCheck: { viewModel.handleEvent(.toggleCompleted(item)) }
                     )
+                    .onTapGesture { viewModel.handleEvent(.editItem(item)) }
                 }
             }
         }

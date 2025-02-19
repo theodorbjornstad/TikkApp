@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct TodoDetailView: View {
-    init(onCommit: @escaping (Todo) -> Void) {
-        self._viewModel = State(wrappedValue: TodoDetailViewModel(onCommit: onCommit))
+    init(item: Todo, onCommit: @escaping (Todo) -> Void) {
+        self._viewModel = State(
+            wrappedValue: TodoDetailViewModel(
+                item: item,
+                onCommit: onCommit
+            )
+        )
     }
 
     @State var viewModel: TodoDetailViewModel
@@ -40,29 +45,16 @@ struct TodoDetailView: View {
             )
         }
     }
-
-    // var picker: some View {
-    //     Menu {
-    //         Picker(
-    //             selection: $viewModel.selectedCategory,
-    //             label: EmptyView(),
-    //             content: {
-    //                 ForEach(viewModel.availableCategories, id: \.id) {
-    //                     Text($0.title)
-    //                         .tag($0)
-    //                 }
-    //             }
-    //         )
-    //         .pickerStyle(.automatic)
-    //     } label: {
-    //         Tag(
-    //             title: viewModel.selectedCategory.title,
-    //             color: viewModel.selectedCategory.color
-    //         )
-    //     }
-    // }
 }
 
 #Preview {
-    TodoDetailView(onCommit: { _ in })
+    TodoDetailView(
+        item: .init(
+            title: "",
+            isCompleted: false,
+            syncStatus: .pending,
+            lastModified: .now
+        ),
+        onCommit: { _ in }
+    )
 }

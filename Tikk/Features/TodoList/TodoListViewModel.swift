@@ -12,6 +12,7 @@ extension TodoListViewModel {
     enum InteractionEvent {
         case refresh
         case addItem(_ item: Todo)
+        case editItem(_ item: Todo)
         case createItem
         case commitItem(_ item: Todo)
         case toggleCompleted(_ item: Todo)
@@ -20,7 +21,7 @@ extension TodoListViewModel {
 
 @Observable class TodoListViewModel {
 
-    var showInputSheet: Bool = false
+    var showInputSheet: Todo?
     var items: [Todo] = []
     private let todoRepository: TodoRepository
 
@@ -40,6 +41,8 @@ extension TodoListViewModel {
             onCommitItem(item)
         case .refresh:
             onRefresh()
+        case .editItem(let item):
+            onEditItem(item)
         }
     }
 }
@@ -78,15 +81,26 @@ private extension TodoListViewModel {
     }
 
     func onCreateItem() {
-        showInputSheet = true
+        showInputSheet = .init(
+            id: nil,
+            remoteId: nil,
+            title: "",
+            isCompleted: false,
+            syncStatus: .pending,
+            lastModified: .now
+        )
     }
 
     func onCommitItem(_ item: Todo) {
         items.append(item)
-        showInputSheet = false
+        showInputSheet = nil
 
         Task {
             try await todoRepository.save(item)
         }
+    }
+
+    func onEditItem(_ item: Todo) {
+        showInputSheet = item
     }
 }

@@ -19,22 +19,20 @@ class TodoDetailViewModel {
     let placeholder: String = Asset.String.input_placeholder
     var selectedText: String = ""
 
+    private var item: Todo
     private let onCommit: (Todo) -> Void
 
-    init(onCommit: @escaping (Todo) -> Void) {
+    init(item: Todo, onCommit: @escaping (Todo) -> Void) {
         self.onCommit = onCommit
-        self.selectedText = ""
+        self.item = item
+        selectedText = item.title
     }
 
     func handleEvent(_ event: InteractionEvent) {
         switch event {
         case .commit:
-            onCommit(.init(
-                title: selectedText,
-                isCompleted: false,
-                syncStatus: .pending,
-                lastModified: .now
-            ))
+            item.title = selectedText
+            onCommit(item)
         }
     }
 }
