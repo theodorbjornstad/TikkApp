@@ -41,16 +41,20 @@ class APIServiceImp: APIService {
     }
 
 
-    func saveTodo(_ todo: TodoApiDao) async throws {
+    func saveTodo(_ todo: Todo) async throws {
         print("☁️ Saving todo: \(todo)")
-        guard let documentId = todo.id else {
+        guard let documentId = todo.remoteId else {
             // TODO: Throw error
             return
         }
-        try await firestore
+        let collection = try await firestore
             .collection(collection)
             .document(documentId)
-            .setData(from: todo)
+            .setData([
+            "title": todo.title,
+            "completed": todo.isCompleted,
+            "lastModified": Timestamp(date: todo.lastModified)
+        ], merge: true)
     }
 
     func addTodo(_ todo: Todo) async throws -> String {
@@ -63,7 +67,7 @@ class APIServiceImp: APIService {
     }
 }
 
-struct TodoApiDao: Codable {
+struct TodoApiDao: Decodable {
     @DocumentID var id: String?
     let title: String
     let completed: Bool
