@@ -5,12 +5,11 @@
 //  Created by Theodor Holmen Bjørnstad on 13/02/2025.
 //
 
-import GRDB
 import SwiftUI
+import Combine
 
 extension TodoListViewModel {
     enum InteractionEvent {
-        case refresh
         case addItem(_ item: Todo)
         case editItem(_ item: Todo)
         case createItem
@@ -19,15 +18,23 @@ extension TodoListViewModel {
     }
 }
 
-@Observable class TodoListViewModel {
+class TodoListViewModel<DS: DataService>: ObservableObject where DS.Item == Todo {
 
-    var showInputSheet: Todo?
-    var items: [Todo] = []
-    private let todoRepository: TodoRepository
+    @Published var showInputSheet: Todo?
+    @Published var items: [Todo] = []
+    @Published private var isOnline: Bool = true
+    private let dataService: DS
+    private let networkMonitor: NetworkMonitorService
+    private var cancellables: Set<AnyCancellable>
 
-    init(todoRepository: TodoRepository) {
-        self.todoRepository = todoRepository
-        loadItems()
+    init(
+        dataService: DS,
+        networkMonitor: NetworkMonitorService
+    ) {
+        self.dataService = dataService
+        self.networkMonitor = networkMonitor
+        self.cancellables = Set<AnyCancellable>()
+        self.setObservers()
     }
 
     func handleEvent(_ event: InteractionEvent) {
@@ -39,72 +46,73 @@ extension TodoListViewModel {
             onToggleCompleted(item)
         case .commitItem(let item):
             onCommitItem(item)
-        case .refresh:
-            onRefresh()
         case .editItem(let item):
             onEditItem(item)
         }
     }
 }
 
-private extension TodoListViewModel {
-    func loadItems() {
-        Task {
-            for await items in todoRepository.fetch() {
-                self.items = items
-            }
-            print("ℹ️ Received list in viewModel: \(items)")
-        }
+// MARK: View State
+
+extension TodoListViewModel {
+    var toolbarIcon: String {
+        isOnline ? Asset.Icon.online : Asset.Icon.offline
     }
+}
+
+// MARK: Private functions - View Actions
+
+private extension TodoListViewModel {
 
     func onAddItem(_ item: Todo) {
-        Task {
-            try await todoRepository.save(item)
-        }
+        dataService.add(item)
     }
 
     func onToggleCompleted(_ todo: Todo) {
-        guard let index = items.firstIndex(of: todo) else { return }
-        withAnimation {
-            items[index].isCompleted.toggle()
-        }
-        Task {
-            try await todoRepository.save(items[index])
-        }
-    }
-
-    func onRefresh() {
-        Task {
-            try await todoRepository.sync()
-            items = try todoRepository.fetch()
-        }
+        var copy = todo
+        copy.completed.toggle()
+        dataService.update(copy)
     }
 
     func onCreateItem() {
-        showInputSheet = .init(
-            id: nil,
-            remoteId: nil,
-            title: "",
-            isCompleted: false,
-            syncStatus: .pending,
-            lastModified: .now
-        )
+        showInputSheet = .init(title: "", completed: false, lastModified: .now)
     }
 
     func onCommitItem(_ item: Todo) {
         showInputSheet = nil
 
-        if let index = items.firstIndex(where: { $0.id == item.id }) {
-            items[index] = item
+        if items.contains(where: { $0.id == item.id }) {
+            dataService.update(item)
         } else {
-            items.append(item)
-        }
-        Task {
-            try await todoRepository.save(item)
+            dataService.add(item)
         }
     }
 
     func onEditItem(_ item: Todo) {
         showInputSheet = item
+    }
+}
+
+// MARK: Private functions
+
+private extension TodoListViewModel {
+    func setObservers() {
+        // Observe todo items
+        dataService
+            .getData()
+            .sink { error in
+                // TODO: Handle error
+            } receiveValue: { [weak self] items in
+                self?.items = items
+            }
+            .store(in: &cancellables)
+
+        // Observe network status
+        networkMonitor.networkStatusPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                self?.isOnline = status
+            }
+            .store(in: &cancellables)
     }
 }

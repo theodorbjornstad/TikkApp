@@ -6,27 +6,12 @@
 //
 
 import Foundation
-import GRDB
+import Firebase
+import FirebaseFirestore
 
-enum SyncStatus: String, Codable {
-    case synced, pending
-}
-
-
-// TODO: remove identifiable
-struct Todo: Identifiable, Equatable {
-    var id: Int64?
-    var remoteId: String?
+struct Todo: FirebaseModelType {
+    @DocumentID var id: String?
     var title: String
-    var isCompleted: Bool
-    var syncStatus: SyncStatus
+    var completed: Bool
     var lastModified: Date
-}
-
-// TODO: Move
-extension Todo: Codable, FetchableRecord, MutablePersistableRecord {
-    // Update auto-incremented id upon successful insertion
-    mutating func didInsert(_ inserted: InsertionSuccess) {
-        id = inserted.rowID
-    }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "f0086948855b6d38e834cf90988fd25f381c94be48b2ed3010e57debad433ecc",
+  "originHash" : "cc307039a2512bd12195654981682b72f7eaabf71be65a43c11b5b24b3555af6",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -56,15 +56,6 @@
       }
     },
     {
-      "identity" : "grdb.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/groue/GRDB.swift",
-      "state" : {
-        "branch" : "master",
-        "revision" : "c7205b172f38439e7ee62c208d1d76fa353c0a81"
-      }
-    },
-    {
       "identity" : "grpc-binary",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/grpc-binary.git",
@@ -116,15 +107,6 @@
       "state" : {
         "revision" : "b7e1104502eca3a213b46303391ca4d3bc8ddec1",
         "version" : "2.30910.0"
-      }
-    },
-    {
-      "identity" : "objectbox-swift-spm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/objectbox/objectbox-swift-spm",
-      "state" : {
-        "branch" : "4.1.0-beta.2",
-        "revision" : "01fdb75f9c6da0c2a378598ef0c4bac6e777f3c1"
       }
     },
     {

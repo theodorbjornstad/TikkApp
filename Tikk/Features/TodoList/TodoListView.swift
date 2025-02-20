@@ -10,21 +10,9 @@ import SwiftData
 import Lottie
 
 struct TodoListView: View {
-    init(
-        apiService: APIService,
-        databaseService: DatabaseService
-    ) {
-        self.hasPlayed = false
-        self._viewModel = State(wrappedValue: .init(
-           todoRepository: TodoRepositoryImp(
-               apiService: apiService,
-               databaseService: databaseService
-           )
-       ))
-    }
 
-    @State var viewModel: TodoListViewModel
-    @State var hasPlayed: Bool
+    @StateObject var viewModel: TodoListViewModel<FirebaseService<Todo>>
+    @State var hasPlayed: Bool = false
 
     var body: some View {
         NavigationView {
@@ -62,8 +50,13 @@ struct TodoListView: View {
         }
         .padding(16)
         .background(Asset.Color.background)
-        .navigationBarTitle("My To-Do List", displayMode: .inline)
-        .toolbar { refreshButton }
+        .navigationBarTitle(Asset.String.navbar_header, displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Image(systemName: viewModel.toolbarIcon)
+                    .font(.title2)
+            }
+        }
     }
 
     var emptyState: some View {
@@ -77,14 +70,6 @@ struct TodoListView: View {
         }
     }
 
-    var refreshButton: some View {
-        Button(action: { viewModel.handleEvent(.refresh) }) {
-            Image(systemName: "arrow.clockwise.circle.fill")
-                .font(.title)
-                .foregroundColor(.blue)
-        }
-    }
-
     @ViewBuilder
     private var list: some View {
         if viewModel.items.isEmpty {
@@ -94,7 +79,7 @@ struct TodoListView: View {
                 ForEach(viewModel.items, id: \.id) { item in
                     ListItem(
                         title: item.title,
-                        isChecked: item.isCompleted,
+                        isChecked: item.completed,
                         onCheck: { viewModel.handleEvent(.toggleCompleted(item)) }
                     )
                     .onTapGesture { viewModel.handleEvent(.editItem(item)) }

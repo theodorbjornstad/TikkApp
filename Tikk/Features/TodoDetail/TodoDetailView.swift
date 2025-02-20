@@ -46,15 +46,3 @@ struct TodoDetailView: View {
         }
     }
 }
-
-#Preview {
-    TodoDetailView(
-        item: .init(
-            title: "",
-            isCompleted: false,
-            syncStatus: .pending,
-            lastModified: .now
-        ),
-        onCommit: { _ in }
-    )
-}

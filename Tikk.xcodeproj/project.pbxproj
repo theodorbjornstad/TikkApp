@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D715CA6E2D66164400D62E48 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA6D2D66164400D62E48 /* GRDB */; };
 		D715CA762D664B4300D62E48 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA752D664B4300D62E48 /* FirebaseAuth */; };
 		D715CA782D664B4300D62E48 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA772D664B4300D62E48 /* FirebaseFirestore */; };
 		D715CA7A2D664B4300D62E48 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D715CA792D664B4300D62E48 /* FirebaseFirestoreCombine-Community */; };
 		D754F6382D5EADE400086ABF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D754F6372D5EADE400086ABF /* Lottie */; };
-		D7C129862D66AD7800C3AAE4 /* ObjectBox.xcframework in Frameworks */ = {isa = PBXBuildFile; productRef = D7C129852D66AD7800C3AAE4 /* ObjectBox.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,12 +54,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7C129862D66AD7800C3AAE4 /* ObjectBox.xcframework in Frameworks */,
 				D754F6382D5EADE400086ABF /* Lottie in Frameworks */,
 				D715CA782D664B4300D62E48 /* FirebaseFirestore in Frameworks */,
 				D715CA762D664B4300D62E48 /* FirebaseAuth in Frameworks */,
 				D715CA7A2D664B4300D62E48 /* FirebaseFirestoreCombine-Community in Frameworks */,
-				D715CA6E2D66164400D62E48 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,11 +118,9 @@
 			name = Tikk;
 			packageProductDependencies = (
 				D754F6372D5EADE400086ABF /* Lottie */,
-				D715CA6D2D66164400D62E48 /* GRDB */,
 				D715CA752D664B4300D62E48 /* FirebaseAuth */,
 				D715CA772D664B4300D62E48 /* FirebaseFirestore */,
 				D715CA792D664B4300D62E48 /* FirebaseFirestoreCombine-Community */,
-				D7C129852D66AD7800C3AAE4 /* ObjectBox.xcframework */,
 			);
 			productName = Tikk;
 			productReference = D73D85CD2D5E65D500B2CD20 /* Tikk.app */;
@@ -209,9 +203,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D754F6362D5EADE400086ABF /* XCRemoteSwiftPackageReference "lottie-spm" */,
-				D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */,
 				D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				D7C129842D66AD7800C3AAE4 /* XCRemoteSwiftPackageReference "objectbox-swift-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D73D85CE2D5E65D500B2CD20 /* Products */;
@@ -419,8 +411,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -447,8 +440,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -576,14 +570,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/groue/GRDB.swift";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -600,22 +586,9 @@
 				minimumVersion = 4.5.1;
 			};
 		};
-		D7C129842D66AD7800C3AAE4 /* XCRemoteSwiftPackageReference "objectbox-swift-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/objectbox/objectbox-swift-spm";
-			requirement = {
-				branch = "4.1.0-beta.2";
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D715CA6D2D66164400D62E48 /* GRDB */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D715CA6C2D66164400D62E48 /* XCRemoteSwiftPackageReference "GRDB" */;
-			productName = GRDB;
-		};
 		D715CA752D664B4300D62E48 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D715CA742D664B4300D62E48 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -635,11 +608,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D754F6362D5EADE400086ABF /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
-		};
-		D7C129852D66AD7800C3AAE4 /* ObjectBox.xcframework */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D7C129842D66AD7800C3AAE4 /* XCRemoteSwiftPackageReference "objectbox-swift-spm" */;
-			productName = ObjectBox.xcframework;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
