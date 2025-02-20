@@ -5,44 +5,51 @@
 //  Created by Theodor Holmen Bjørnstad on 17/02/2025.
 //
 
+import Observation
 import SwiftUI
 
 struct TodoDetailView: View {
-    init(item: Todo, onCommit: @escaping (Todo) -> Void) {
-        self._viewModel = State(
-            wrappedValue: TodoDetailViewModel(
-                item: item,
-                onCommit: onCommit
-            )
-        )
-    }
 
-    @State var viewModel: TodoDetailViewModel
+    @StateObject var viewModel: TodoDetailViewModel
 
     var body: some View {
-        VStack(spacing: 16) {
-            textInput
-            footer
-            Spacer()
+        ScrollView {
+            VStack(spacing: 16) {
+                textInput
+                footer
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 32)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 32)
+        .scrollIndicators(.hidden)
     }
 
     var textInput: some View {
         TextField(viewModel.placeholder, text: $viewModel.selectedText)
+            .frame(minHeight: 24)
     }
 
     var footer: some View {
         HStack {
             Spacer()
 
-            // TODO: Add state
             CircularButton(
                 imageName: Asset.Icon.checkmark,
+                style: .regular,
                 size: .small,
-                action: { viewModel.handleEvent(.commit) }
+                action: { viewModel.handleEvent(.save) },
+                state: viewModel.saveButtonState
             )
+            if viewModel.showDeleteButton {
+                CircularButton(
+                    imageName: Asset.Icon.delete,
+                    style: .desctructive,
+                    size: .small,
+                    action: { viewModel.handleEvent(.delete) },
+                    state: .idle
+                )
+            }
         }
     }
 }

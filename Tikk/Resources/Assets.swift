@@ -25,6 +25,7 @@ enum Asset {
         static let checkmark = "checkmark"
         static let online = "wifi"
         static let offline = "wifi.slash"
+        static let delete = "xmark"
     }
     enum String {
         static let input_placeholder = "Input new task here"

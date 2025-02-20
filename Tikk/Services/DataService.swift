@@ -20,7 +20,7 @@ protocol DataService: ObservableObject {
     func delete(_ item: Item)
 }
 
-protocol FirebaseModelType: Identifiable, Codable {
+protocol FirebaseModelType: Identifiable, Codable, Equatable, Hashable {
     var id: String? { set get }
 }
 
@@ -74,7 +74,6 @@ class FirebaseService<T : FirebaseModelType>: ObservableObject, DataService {
         guard let documentID = item.id else { return }
         do{
             try store.collection(path).document(documentID).setData(from: item)
-
         } catch {
             fatalError("Updating item failed")
         }

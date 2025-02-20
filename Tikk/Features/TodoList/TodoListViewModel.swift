@@ -13,26 +13,23 @@ extension TodoListViewModel {
         case addItem(_ item: Todo)
         case editItem(_ item: Todo)
         case createItem
-        case commitItem(_ item: Todo)
+        case closeSheet
         case toggleCompleted(_ item: Todo)
     }
 }
 
-class TodoListViewModel<DS: DataService>: ObservableObject where DS.Item == Todo {
+class TodoListViewModel: ObservableObject {
 
-    @Published var showInputSheet: Todo?
+    @Injected(\.dataService) private var dataService
+    @Injected(\.networkMonitorService) private var networkMonitorService
+
+    @Published var sheetAction: TodoDetailViewModel.Action?
     @Published var items: [Todo] = []
+
     @Published private var isOnline: Bool = true
-    private let dataService: DS
-    private let networkMonitor: NetworkMonitorService
     private var cancellables: Set<AnyCancellable>
 
-    init(
-        dataService: DS,
-        networkMonitor: NetworkMonitorService
-    ) {
-        self.dataService = dataService
-        self.networkMonitor = networkMonitor
+    init() {
         self.cancellables = Set<AnyCancellable>()
         self.setObservers()
     }
@@ -44,8 +41,8 @@ class TodoListViewModel<DS: DataService>: ObservableObject where DS.Item == Todo
             onCreateItem()
         case .toggleCompleted(let item):
             onToggleCompleted(item)
-        case .commitItem(let item):
-            onCommitItem(item)
+        case .closeSheet:
+            onCloseSheet()
         case .editItem(let item):
             onEditItem(item)
         }
@@ -75,43 +72,33 @@ private extension TodoListViewModel {
     }
 
     func onCreateItem() {
-        showInputSheet = .init(title: "", completed: false, lastModified: .now)
+        sheetAction = .add
     }
 
-    func onCommitItem(_ item: Todo) {
-        showInputSheet = nil
-
-        if items.contains(where: { $0.id == item.id }) {
-            dataService.update(item)
-        } else {
-            dataService.add(item)
-        }
+    func onCloseSheet() {
+        sheetAction = nil
     }
 
     func onEditItem(_ item: Todo) {
-        showInputSheet = item
+        sheetAction = .edit(item)
     }
-}
 
-// MARK: Private functions
-
-private extension TodoListViewModel {
     func setObservers() {
         // Observe todo items
         dataService
             .getData()
-            .sink { error in
-                // TODO: Handle error
-            } receiveValue: { [weak self] items in
+            .sink { _ in } receiveValue: { [weak self] items in
                 self?.items = items
             }
             .store(in: &cancellables)
 
         // Observe network status
-        networkMonitor.networkStatusPublisher
+        networkMonitorService.networkStatusPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
-                self?.isOnline = status
+                withAnimation {
+                    self?.isOnline = status
+                }
             }
             .store(in: &cancellables)
     }

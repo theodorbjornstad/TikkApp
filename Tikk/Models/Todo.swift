@@ -13,5 +13,10 @@ struct Todo: FirebaseModelType {
     @DocumentID var id: String?
     var title: String
     var completed: Bool
-    var lastModified: Date
+}
+
+protocol AutoIdentifiable: Identifiable, Hashable {}
+
+extension Identifiable where Self: AutoIdentifiable {
+    var id: Int { hashValue }
 }

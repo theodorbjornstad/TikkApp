@@ -23,11 +23,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct TikkApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var hasPlayed = false
 
     var body: some Scene {
         WindowGroup {
-            TodoListView(
-                viewModel: .init(dataService: FirebaseService(path: "todos"), networkMonitor: .init()))
+            TodoListView()
         }
+    }
+
+    private var splashScreen: some View {
+        SplashScreen(onFinished: {
+            Task {
+                try await Task.sleep(nanoseconds: 600_000_000)
+                hasPlayed = true
+            }
+        })
     }
 }

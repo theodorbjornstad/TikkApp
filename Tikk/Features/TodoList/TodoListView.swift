@@ -11,33 +11,12 @@ import Lottie
 
 struct TodoListView: View {
 
-    @StateObject var viewModel: TodoListViewModel<FirebaseService<Todo>>
-    @State var hasPlayed: Bool = false
+    @StateObject var viewModel = TodoListViewModel()
 
     var body: some View {
         NavigationView {
-            if hasPlayed {
-                content
-            } else {
-                splashScreen
-            }
+            content
         }
-        .sheet(item: $viewModel.showInputSheet) { item in
-            TodoDetailView(
-                item: item,
-                onCommit: { viewModel.handleEvent(.commitItem($0)) }
-            )
-            .presentationDetents([.height(160), .medium])
-        }
-    }
-
-    private var splashScreen: some View {
-        SplashScreen(onFinished: {
-            Task {
-                try await Task.sleep(nanoseconds: 600_000_000)
-                hasPlayed = true
-            }
-        })
     }
 
     private var content: some View {
@@ -50,13 +29,10 @@ struct TodoListView: View {
         }
         .padding(16)
         .background(Asset.Color.background)
+        .ignoresSafeArea(.keyboard)
         .navigationBarTitle(Asset.String.navbar_header, displayMode: .inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Image(systemName: viewModel.toolbarIcon)
-                    .font(.title2)
-            }
-        }
+        .toolbar { toolbarIcon }
+        .sheet(item: $viewModel.sheetAction) { detailSheet($0) }
     }
 
     var emptyState: some View {
@@ -95,10 +71,27 @@ struct TodoListView: View {
                 Spacer()
                 CircularButton(
                     imageName: Asset.Icon.plus,
+                    style: .regular,
                     size: .medium,
-                    action: { viewModel.handleEvent(.createItem) }
+                    action: { viewModel.handleEvent(.createItem) },
+                    state: .idle
                 )
             }
+        }
+    }
+
+    private func detailSheet(_ action: TodoDetailViewModel.Action) -> some View {
+        TodoDetailView(viewModel: .init(
+            action: action,
+            onCommit: { viewModel.handleEvent(.closeSheet) }
+        ))
+        .presentationDetents([.height(160)])
+    }
+
+    private var toolbarIcon: ToolbarItem<(), some View> {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Image(systemName: viewModel.toolbarIcon)
+                .font(.title2)
         }
     }
 }
