@@ -68,19 +68,32 @@ private extension TodoRepositoryImp {
             let localTodos = try databaseService.fetchTodos()
 
             for serverTodo in serverTodos {
-                if let localTodo = localTodos.first(where: { $0.remoteId == serverTodo.remoteId }) {
+                if let localTodo = localTodos.first(where: { $0.remoteId == serverTodo.id }) {
                     // Conflict resolution: last write wins
                     print("🔀 serverTodo: \(serverTodo.lastModified)  localTodo: \(localTodo.lastModified)")
                     if serverTodo.lastModified > localTodo.lastModified {
-                        var syncedTodo = serverTodo
-                        syncedTodo.id = localTodo.id
-                        syncedTodo.syncStatus = .synced
+                        let mergedTodo: Todo = .init(
+                            id: localTodo.id,
+                            remoteId: serverTodo.id,
+                            title: serverTodo.title,
+                            isCompleted: serverTodo.completed,
+                            syncStatus: .synced,
+                            lastModified: serverTodo.lastModified
+                        )
                         print("🔀 Inserting todo from server after conflict resolution")
-                        try databaseService.saveTodo(syncedTodo)
+                        try databaseService.saveTodo(mergedTodo)
                     }
                 } else {
                     print("⬇️ Inserting todo from server")
-                    try databaseService.saveTodo(serverTodo)
+                    let newTodo: Todo = .init(
+                        id: nil,
+                        remoteId: serverTodo.id,
+                        title: serverTodo.title,
+                        isCompleted: serverTodo.completed,
+                        syncStatus: .synced,
+                        lastModified: serverTodo.lastModified
+                    )
+                    try databaseService.saveTodo(newTodo)
                 }
             }
         } catch {

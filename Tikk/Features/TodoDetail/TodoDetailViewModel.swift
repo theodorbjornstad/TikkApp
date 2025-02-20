@@ -32,6 +32,7 @@ class TodoDetailViewModel {
         switch event {
         case .commit:
             item.title = selectedText
+            item.lastModified = .now
             onCommit(item)
         }
     }

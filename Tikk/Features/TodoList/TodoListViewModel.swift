@@ -92,9 +92,13 @@ private extension TodoListViewModel {
     }
 
     func onCommitItem(_ item: Todo) {
-        items.append(item)
         showInputSheet = nil
 
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            items[index] = item
+        } else {
+            items.append(item)
+        }
         Task {
             try await todoRepository.save(item)
         }

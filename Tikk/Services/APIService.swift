@@ -11,7 +11,7 @@ import FirebaseCore
 import FirebaseFirestore
 
 protocol APIService {
-    func fetchTodos(lastSyncTimestamp: Date) async throws -> [Todo]
+    func fetchTodos(lastSyncTimestamp: Date) async throws -> [TodoApiDao]
     func saveTodo(_ todo: Todo) async throws
     func addTodo(_ todo: Todo) async throws -> String
 }
@@ -27,48 +27,30 @@ class APIServiceImp: APIService {
 
     private let collection = "todos"
 
-    func fetchTodos(lastSyncTimestamp: Date) async throws -> [Todo] {
-        let documents = try await firestore
+    func fetchTodos(lastSyncTimestamp: Date) async throws -> [TodoApiDao] {
+        try await firestore
             .collection(collection)
             .whereField("lastModified", isGreaterThan: Timestamp(date: lastSyncTimestamp))
             .getDocuments()
             .documents
-
-        let data = documents.compactMap { snapshot -> Todo? in
-            let data = snapshot.data()
-
-            guard
-                let title = data["title"] as? String,
-                let lastModified = data["lastModified"] as? Timestamp,
-                let isCompleted = data["isCompleted"] as? Bool
-            else {
-                print("Skipping document \(snapshot.documentID) due to missing or invalid fields")
-                return nil
+            .compactMap { snapshot -> TodoApiDao? in
+                let decodedModel = try? snapshot.data(as: TodoApiDao.self)
+                print("❌ Decoding error: \(decodedModel)")
+                return decodedModel
             }
-            return Todo(
-                id: nil,
-                remoteId: snapshot.documentID,
-                title: title,
-                isCompleted: isCompleted,
-                syncStatus: .synced,
-                lastModified: lastModified.dateValue()
-            )
-        }
-        return data
     }
 
 
-    func saveTodo(_ todo: Todo) async throws {
+    func saveTodo(_ todo: TodoApiDao) async throws {
         print("☁️ Saving todo: \(todo)")
-        guard let documentId = todo.remoteId else {
+        guard let documentId = todo.id else {
             // TODO: Throw error
             return
         }
-        try await firestore.collection(collection).document(documentId).setData([
-            "title": todo.title,
-            "completed": todo.isCompleted,
-            "lastModified": Timestamp(date: todo.lastModified)
-        ], merge: true)
+        try await firestore
+            .collection(collection)
+            .document(documentId)
+            .setData(from: todo)
     }
 
     func addTodo(_ todo: Todo) async throws -> String {
@@ -79,4 +61,11 @@ class APIServiceImp: APIService {
             "lastModified": Timestamp(date: todo.lastModified)
         ]).documentID
     }
+}
+
+struct TodoApiDao: Codable {
+    @DocumentID var id: String?
+    let title: String
+    let completed: Bool
+    let lastModified: Date
 }

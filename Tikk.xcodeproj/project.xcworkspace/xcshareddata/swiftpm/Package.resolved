@@ -1,5 +1,5 @@
 {
-  "originHash" : "aa5eb03ab634de693c4dacb5a64429ccb198d593dffa96dd2175302d66dfe5f7",
+  "originHash" : "f0086948855b6d38e834cf90988fd25f381c94be48b2ed3010e57debad433ecc",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -116,6 +116,15 @@
       "state" : {
         "revision" : "b7e1104502eca3a213b46303391ca4d3bc8ddec1",
         "version" : "2.30910.0"
+      }
+    },
+    {
+      "identity" : "objectbox-swift-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/objectbox/objectbox-swift-spm",
+      "state" : {
+        "branch" : "4.1.0-beta.2",
+        "revision" : "01fdb75f9c6da0c2a378598ef0c4bac6e777f3c1"
       }
     },
     {
