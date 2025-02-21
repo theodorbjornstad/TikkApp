@@ -15,12 +15,16 @@ struct TikkApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TodoListView()
+            if hasPlayed {
+                TodoListView()
+            } else {
+                splashView
+            }
         }
     }
 
-    private var splashScreen: some View {
-        SplashScreen(onFinished: {
+    private var splashView: some View {
+        SplashView(onFinished: {
             Task {
                 try await Task.sleep(nanoseconds: 600_000_000)
                 hasPlayed = true

@@ -15,24 +15,20 @@ struct TodoListView: View {
 
     var body: some View {
         NavigationView {
-            content
-        }
-    }
-
-    private var content: some View {
-        ZStack {
-            VStack(alignment: .center, spacing: 16) {
-                list
-                Spacer()
+            ZStack {
+                VStack(alignment: .center, spacing: 16) {
+                    list
+                    Spacer()
+                }
+                floatingAddButton
             }
-            floatingAddButton
+            .padding(16)
+            .background(Asset.Color.background)
+            .ignoresSafeArea(.keyboard)
+            .navigationBarTitle(Asset.String.navbar_header, displayMode: .inline)
+            .toolbar { toolbarIcon }
+            .sheet(item: $viewModel.sheetAction) { detailSheet($0) }
         }
-        .padding(16)
-        .background(Asset.Color.background)
-        .ignoresSafeArea(.keyboard)
-        .navigationBarTitle(Asset.String.navbar_header, displayMode: .inline)
-        .toolbar { toolbarIcon }
-        .sheet(item: $viewModel.sheetAction) { detailSheet($0) }
     }
 
     @ViewBuilder
