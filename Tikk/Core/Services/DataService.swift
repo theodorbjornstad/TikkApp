@@ -47,9 +47,8 @@ class FirebaseService<T : FirebaseModelType>: ObservableObject, DataService {
                 print(error)
                 return
             }
-            self.items = snapshot?.documents.compactMap{
-                try? $0.data(as: T.self)
-            } ?? []
+            self.items = snapshot?.documents
+                .compactMap { try? $0.data(as: T.self) } ?? []
         }
     }
 

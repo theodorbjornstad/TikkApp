@@ -35,17 +35,6 @@ struct TodoListView: View {
         .sheet(item: $viewModel.sheetAction) { detailSheet($0) }
     }
 
-    var emptyState: some View {
-        VStack(alignment: .center) {
-            LottieView(animation: .named(Asset.Animation.emptyState))
-                .playing(loopMode: .loop)
-                .frame(width: 200, height: 200)
-
-            Text(Asset.String.list_no_content)
-                .font(.callout)
-        }
-    }
-
     @ViewBuilder
     private var list: some View {
         if viewModel.items.isEmpty {
@@ -92,6 +81,17 @@ struct TodoListView: View {
         ToolbarItem(placement: .navigationBarTrailing) {
             Image(systemName: viewModel.toolbarIcon)
                 .font(.title2)
+        }
+    }
+
+    var emptyState: some View {
+        VStack(alignment: .center) {
+            LottieView(animation: .named(Asset.Animation.emptyState))
+                .playing(loopMode: .loop)
+                .frame(width: 200, height: 200)
+
+            Text(Asset.String.list_no_content)
+                .font(.callout)
         }
     }
 }
