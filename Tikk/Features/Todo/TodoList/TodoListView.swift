@@ -71,6 +71,7 @@ struct TodoListView: View {
             onCommit: { viewModel.handleEvent(.closeSheet) }
         ))
         .presentationDetents([.height(160)])
+        .presentationBackgroundInteraction(.disabled)
     }
 
     private var toolbarIcon: ToolbarItem<(), some View> {

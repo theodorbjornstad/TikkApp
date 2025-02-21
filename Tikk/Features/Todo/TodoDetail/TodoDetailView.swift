@@ -7,6 +7,7 @@
 
 import Observation
 import SwiftUI
+import SwiftUIIntrospect
 
 struct TodoDetailView: View {
 
@@ -52,4 +53,11 @@ struct TodoDetailView: View {
             }
         }
     }
+}
+
+#Preview {
+    TodoDetailView(viewModel: TodoDetailViewModel(action: .add, onCommit: { }))
+        .frame(height: 140)
+        .border(.red)
+
 }
