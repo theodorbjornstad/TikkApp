@@ -20,7 +20,7 @@ extension TodoDetailViewModel {
 
 @MainActor class TodoDetailViewModel: ObservableObject {
 
-    @Injected(\.dataService) private var dataService
+    @Injected(\.todoRepository) private var todoRepository
     @Published var selectedText: String
 
     private var item: Todo
@@ -74,7 +74,11 @@ extension TodoDetailViewModel {
         guard case .edit(let todo) = action else {
             return
         }
-        dataService.delete(todo)
+        do {
+            try todoRepository.delete(todo)
+        } catch {
+            // TODO: Handle error
+        }
         onCommit()
     }
 
@@ -83,9 +87,17 @@ extension TodoDetailViewModel {
 
         switch action {
         case .add:
-            dataService.add(item)
+            do {
+                try todoRepository.add(item)
+            } catch {
+                // TODO: Handle error
+            }
         case .edit:
-            dataService.update(item)
+            do {
+                try todoRepository.update(item)
+            } catch {
+                // TODO: Handle error
+            }
         }
         onCommit()
     }

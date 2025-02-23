@@ -20,7 +20,7 @@ extension TodoListViewModel {
 
 class TodoListViewModel: ObservableObject {
 
-    @Injected(\.dataService) private var dataService
+    @Injected(\.todoRepository) private var todoRepository
     @Injected(\.networkMonitorService) private var networkMonitorService
 
     @Published var sheetAction: TodoDetailViewModel.Action?
@@ -62,13 +62,13 @@ extension TodoListViewModel {
 private extension TodoListViewModel {
 
     func onAddItem(_ item: Todo) {
-        dataService.add(item)
+        performAction(todoRepository.add(item))
     }
 
     func onToggleCompleted(_ todo: Todo) {
         var copy = todo
         copy.completed.toggle()
-        dataService.update(copy)
+        performAction(todoRepository.update(copy))
     }
 
     func onCreateItem() {
@@ -82,15 +82,15 @@ private extension TodoListViewModel {
     func onEditItem(_ item: Todo) {
         sheetAction = .edit(item)
     }
+}
 
-    func setObservers() {
+extension TodoListViewModel {
+
+    private func setObservers() {
         // Observe todo items
-        dataService
-            .getData()
-            .sink { _ in } receiveValue: { [weak self] items in
-                self?.items = items
-            }
-            .store(in: &cancellables)
+        performAction(todoRepository.getData()) { [weak self] todos in
+            self?.items = todos
+        }
 
         // Observe network status
         networkMonitorService.networkStatusPublisher
@@ -99,6 +99,30 @@ private extension TodoListViewModel {
                 withAnimation {
                     self?.isOnline = status
                 }
+            }
+            .store(in: &cancellables)
+    }
+
+    private func performAction<T>(
+        _ publisher: AnyPublisher<T, Error>,
+        successHandler: ((T) -> Void)? = nil,
+        failureHandler: ((Error) -> Void)? = nil
+    ) {
+        publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    guard let self else { return }
+
+                    // let errorMessage = self.firebaseErrorMessage(from: error)
+                    // self.modelError = TodoListModelError(message: errorMessage)
+
+                    failureHandler?(error)
+                case .finished: break
+                }
+            } receiveValue: { value in
+                successHandler?(value)
             }
             .store(in: &cancellables)
     }

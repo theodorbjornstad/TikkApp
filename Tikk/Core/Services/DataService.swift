@@ -11,70 +11,129 @@ import Firebase
 import FirebaseCore
 import FirebaseFirestore
 
-protocol DataService: ObservableObject {
-    associatedtype Item: FirebaseModelType
+enum FirebaseDataServiceError: Error {
 
-    func getData() -> AnyPublisher<[Item], Error>
-    func add(_ item: Item)
-    func update(_ item: Item)
-    func delete(_ item: Item)
+    case documentIDMissing
+    case addDocumentFailed(Error?)
+    case deleteDocumentFailed(Error?)
+    case updateDocumentFailed(Error?)
+    case customError(String?)
 }
 
-protocol FirebaseModelType: Identifiable, Codable, Equatable, Hashable {
+protocol FBModelType: Identifiable, Codable, Equatable {
     var id: String? { set get }
 }
 
-class FirebaseService<T : FirebaseModelType>: ObservableObject, DataService {
-    private let path : String
+protocol DataService: ObservableObject {
+    associatedtype Item: FBModelType
+
+    func getData() -> AnyPublisher<[Item], Error>
+    func add(_ item: Item) -> AnyPublisher<Void, Error>
+    func update(_ item: Item) -> AnyPublisher<Void, Error>
+    func delete(_ item: Item) -> AnyPublisher<Void, Error>
+}
+
+class FirebaseDataService<T : FBModelType>: ObservableObject, DataService {
+    private let collectionName : String
     private let store = Firestore.firestore()
 
     @Published var items: [T] = []
 
-    init(path: String){
-        self.path = path
+    init(path: String) {
+        self.collectionName = path
         getDataFromFirebase()
     }
 
     func getData() -> AnyPublisher<[T], Error> {
-        $items
-            .tryMap { $0 }
-            .eraseToAnyPublisher()
-    }
+         $items
+             .tryMap { $0 }
+             .eraseToAnyPublisher()
+     }
 
-    func getDataFromFirebase(){
-        store.collection(path).addSnapshotListener { (snapshot, error) in
-            if let error  = error{
-                print(error)
-                return
-            }
-            self.items = snapshot?.documents
-                .compactMap { try? $0.data(as: T.self) } ?? []
-        }
-    }
+     func getDataFromFirebase() {
+         store
+             .collection(collectionName)
+             .addSnapshotListener { (snapshot, error) in
+                 if let error = error{
+                     print(error)
+                     return
+                 }
 
-    func add(_ item: T){
-        do{
-            _ = try store.collection(path).addDocument(from: item)
-        } catch{
-            fatalError("Adding an item failed")
-        }
-    }
+                 self.items = snapshot?.documents.compactMap {
+                     try? $0.data(as: T.self)
+                 } ?? []
+             }
+     }
 
-    func delete(_ item: T){
-        guard let documentID = item.id else { return }
-        store.collection(path).document(documentID).delete{ error in
-            if let error = error {
-                print("Unable to remove fbmask: \(error.localizedDescription)")
-            }
-        }
-    }
+     func add(_ item: T) -> AnyPublisher<Void, Error> {
+         Future<Void, Error> { promise in
+             do {
+                 try self.store
+                     .collection(self.collectionName)
+                     .addDocument(from: item) { error in
+                         if let _ = error {
+                             promise(.failure(FirebaseDataServiceError.addDocumentFailed(error)))
+                         } else {
+                             promise(.success(()))
+                         }
+                     }
+             } catch {
+                 promise(.failure(FirebaseDataServiceError.addDocumentFailed(error)))
+             }
+         }
+         .eraseToAnyPublisher()
+     }
 
-    func update(_ item: T){
-        guard let documentID = item.id else { return }
-        do{
-            try store.collection(path).document(documentID).setData(from: item)
-        } catch {
-            fatalError("Updating item failed")
-        }
-    }
+     func delete(_ item: T) -> AnyPublisher<Void, Error> {
+         Future<Void, Error> { promise in
+             guard let documentID = item.id else {
+                 promise(.failure(FirebaseDataServiceError.documentIDMissing))
+                 return
+             }
+
+             self.store
+                 .collection(self.collectionName)
+                 .document(documentID)
+                 .delete { error in
+                     self.handleCompletion(operationError: error,
+                                           promise: promise)
+                 }
+         }
+         .eraseToAnyPublisher()
+     }
+
+     func update(_ item: T) -> AnyPublisher<Void, Error> {
+         Future<Void, Error> { promise in
+             guard let documentID = item.id else {
+                 promise(.failure(FirebaseDataServiceError.documentIDMissing))
+                 return
+             }
+
+             do {
+                 try self.store
+                     .collection(self.collectionName)
+                     .document(documentID)
+                     .setData(from: item) { error in
+                         self.handleCompletion(operationError: error,
+                                               promise: promise)
+                     }
+             } catch {
+                 promise(.failure(FirebaseDataServiceError.updateDocumentFailed(error)))
+             }
+         }
+         .eraseToAnyPublisher()
+     }
+
+
+     // MARK: - Private methods
+
+     private func handleCompletion(operationError: Error?,
+                                   promise: @escaping (Result<Void, Error>) -> Void) {
+         if let error = operationError {
+             promise(.failure(error))
+         } else {
+             promise(.success(()))
+         }
+     }
+
 }

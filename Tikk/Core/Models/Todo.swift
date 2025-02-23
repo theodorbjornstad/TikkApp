@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-struct Todo: FirebaseModelType {
+struct Todo: FBModelType, Equatable, Hashable {
     @DocumentID var id: String?
     var title: String
     var completed: Bool
