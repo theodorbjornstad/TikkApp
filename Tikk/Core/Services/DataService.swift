@@ -108,7 +108,6 @@ class FirebaseDataService<T : FirebaseModel>: ObservableObject, DataService {
                 promise(.failure(FirebaseError.documentIDMissing))
                 return
             }
-            
             do {
                 try self.store
                     .collection(self.collectionName)

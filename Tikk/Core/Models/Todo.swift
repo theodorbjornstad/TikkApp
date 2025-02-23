@@ -14,9 +14,3 @@ struct Todo: FirebaseModel, Equatable, Hashable {
     var title: String
     var completed: Bool
 }
-
-protocol AutoIdentifiable: Identifiable, Hashable {}
-
-extension Identifiable where Self: AutoIdentifiable {
-    var id: Int { hashValue }
-}

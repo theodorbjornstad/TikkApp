@@ -19,15 +19,15 @@ extension TodoDetailViewModel {
 
         var initialTitle: String {
             switch self {
-            case .add: return ""
-            case .edit(let todo): return todo.title
+            case .add: ""
+            case .edit(let todo): todo.title
             }
         }
 
         var existingItem: Todo? {
             switch self {
-            case .add: return nil
-            case .edit(let todo): return todo
+            case .add:  nil
+            case .edit(let todo): todo
             }
         }
     }
