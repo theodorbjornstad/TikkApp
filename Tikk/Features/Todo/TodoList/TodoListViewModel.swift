@@ -20,14 +20,14 @@ extension TodoListViewModel {
     }
 }
 
-class TodoListViewModel: ObservableObject {
+@MainActor class TodoListViewModel: ObservableObject {
     @Injected(\.todoRepository) private var todoRepository
     @Injected(\.networkMonitorService) private var networkMonitorService
 
     @Published var useCase: TodoDetailViewModel.UseCase?
     @Published var items: [Todo] = []
     @Published var error: ListError?
-    @Published private var isOnline: Bool = true
+    @Published private(set) var isOnline: Bool = true
 
     private var cancellables = Set<AnyCancellable>()
 

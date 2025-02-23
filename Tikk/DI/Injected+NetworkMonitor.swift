@@ -6,7 +6,7 @@
 //
 
 private struct NetworkMonitorServiceKey: InjectionKey {
-    static var currentValue: NetworkMonitorService = .init()
+    static var currentValue: NetworkMonitorService = NetworkMonitorServiceImpl()
 }
 
 extension InjectedValues {

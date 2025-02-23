@@ -9,9 +9,11 @@ import SwiftUI
 import Network
 import Combine
 
-class NetworkMonitorService {
-    static let shared = NetworkMonitorService()
+protocol NetworkMonitorService {
+    var networkStatusPublisher: PassthroughSubject<Bool, Never> { get }
+}
 
+class NetworkMonitorServiceImpl: NetworkMonitorService {
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "NetworkMonitor")
 

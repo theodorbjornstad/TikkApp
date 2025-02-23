@@ -42,9 +42,9 @@
 			path = Tikk;
 			sourceTree = "<group>";
 		};
-		D73D85E22D5E65D800B2CD20 /* TikkTests */ = {
+		D73D85E22D5E65D800B2CD20 /* Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TikkTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -82,7 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				D73D85CF2D5E65D500B2CD20 /* Tikk */,
-				D73D85E22D5E65D800B2CD20 /* TikkTests */,
+				D73D85E22D5E65D800B2CD20 /* Tests */,
 				D73D85CE2D5E65D500B2CD20 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -140,7 +140,7 @@
 				D73D85E12D5E65D800B2CD20 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				D73D85E22D5E65D800B2CD20 /* TikkTests */,
+				D73D85E22D5E65D800B2CD20 /* Tests */,
 			);
 			name = TikkTests;
 			packageProductDependencies = (
