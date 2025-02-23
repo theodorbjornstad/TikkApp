@@ -126,7 +126,7 @@ class TodoListViewModelTests: XCTestCase {
     func testErrorHandling_shouldSetListError() {
         // Given
         let expectation = XCTestExpectation(description: "Error should be set")
-        let testError = FirebaseDataServiceError.addDocumentFailed(nil)
+        let testError = FirebaseError.addDocumentFailed(nil)
         mockTodoRepository.mockAddResult = Fail(error: testError).eraseToAnyPublisher()
         sut.useCase = .add
 

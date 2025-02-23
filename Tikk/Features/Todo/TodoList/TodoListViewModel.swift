@@ -121,7 +121,7 @@ private extension TodoListViewModel {
 
 private extension Error {
     var message: String {
-        if let firebaseError = self as? FirebaseDataServiceError {
+        if let firebaseError = self as? FirebaseError {
             return switch firebaseError {
             case .documentIDMissing: Asset.String.error_documentIDMissing
             case .addDocumentFailed: Asset.String.error_addDocumentFailed
