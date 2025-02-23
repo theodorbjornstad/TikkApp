@@ -66,9 +66,9 @@ extension TodoListViewModel {
 
     struct ListError: Identifiable {
         let id = UUID()
-        let title = "Error"
+        let title = Asset.String.error_title
         let message: String
-        let dismissButtonTitle: String = "Ok"
+        let dismissButtonTitle = Asset.String.error_title
     }
 }
 
@@ -119,15 +119,14 @@ private extension TodoListViewModel {
     }
 }
 
-
 private extension Error {
     var message: String {
         if let firebaseError = self as? FirebaseDataServiceError {
             return switch firebaseError {
-            case .documentIDMissing: "The document does not have a valid ID."
-            case .addDocumentFailed: "Error adding the document."
-            case .deleteDocumentFailed: "Error deleting the document."
-            case .updateDocumentFailed: "Error updating the document."
+            case .documentIDMissing: Asset.String.error_documentIDMissing
+            case .addDocumentFailed: Asset.String.error_addDocumentFailed
+            case .deleteDocumentFailed: Asset.String.error_deleteDocumentFailed
+            case .updateDocumentFailed: Asset.String.error_updateDocumentFailed
             }
         } else {
             return self.localizedDescription

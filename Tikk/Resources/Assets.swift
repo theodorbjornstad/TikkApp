@@ -31,5 +31,12 @@ enum Asset {
         static let input_placeholder = "Input new task here"
         static let list_no_content = "No tasks? Guess you’ve mastered life"
         static let navbar_header = "Your Ticks"
+
+        static let error_documentIDMissing = "The document does not have a valid ID."
+        static let error_addDocumentFailed = "Error adding the document."
+        static let error_deleteDocumentFailed = "Error deleting the document."
+        static let error_updateDocumentFailed = "Error updating the document."
+        static let error_dismiss = "Ok"
+        static let error_title = "Error"
     }
 }

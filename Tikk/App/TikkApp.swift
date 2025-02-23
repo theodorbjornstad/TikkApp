@@ -11,11 +11,11 @@ import SwiftUI
 struct TikkApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State private var hasPlayed = false
+    @State private var hasPlayedAnimation = false
 
     var body: some Scene {
         WindowGroup {
-            if hasPlayed {
+            if hasPlayedAnimation {
                 TodoListView()
             } else {
                 splashView
@@ -27,7 +27,7 @@ struct TikkApp: App {
         SplashView(onFinished: {
             Task {
                 try await Task.sleep(nanoseconds: 600_000_000)
-                hasPlayed = true
+                hasPlayedAnimation = true
             }
         })
     }
