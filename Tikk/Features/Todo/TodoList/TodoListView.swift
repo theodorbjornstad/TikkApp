@@ -28,6 +28,13 @@ struct TodoListView: View {
             .navigationBarTitle(Asset.String.navbar_header, displayMode: .inline)
             .toolbar { toolbarIcon }
             .sheet(item: $viewModel.useCase) { detailSheet($0) }
+            .alert(item: $viewModel.error) {
+                Alert(
+                    title: Text($0.title),
+                    message: Text($0.message),
+                    dismissButton: .default(Text($0.dismissButtonTitle))
+                )
+             }
         }
     }
 

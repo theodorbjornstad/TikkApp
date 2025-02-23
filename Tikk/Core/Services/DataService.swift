@@ -17,7 +17,6 @@ enum FirebaseDataServiceError: Error {
     case addDocumentFailed(Error?)
     case deleteDocumentFailed(Error?)
     case updateDocumentFailed(Error?)
-    case customError(String?)
 }
 
 protocol FBModelType: Identifiable, Codable, Equatable {
