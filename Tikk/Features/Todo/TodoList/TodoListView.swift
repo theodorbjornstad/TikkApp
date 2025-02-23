@@ -28,13 +28,7 @@ struct TodoListView: View {
             .navigationBarTitle(Asset.String.navbar_header, displayMode: .inline)
             .toolbar { toolbarIcon }
             .sheet(item: $viewModel.useCase) { detailSheet($0) }
-            .alert(item: $viewModel.error) {
-                Alert(
-                    title: Text($0.title),
-                    message: Text($0.message),
-                    dismissButton: .default(Text($0.dismissButtonTitle))
-                )
-             }
+            .alert(item: $viewModel.error) { alert($0) }
         }
     }
 
@@ -89,7 +83,7 @@ struct TodoListView: View {
         }
     }
 
-    var emptyState: some View {
+    private var emptyState: some View {
         VStack(alignment: .center) {
             LottieView(animation: .named(Asset.Animation.emptyState))
                 .playing(loopMode: .loop)
@@ -98,5 +92,13 @@ struct TodoListView: View {
             Text(Asset.String.list_no_content)
                 .font(.callout)
         }
+    }
+
+    private func alert(_ error: TodoListViewModel.ListError) -> Alert {
+        Alert(
+            title: Text(error.title),
+            message: Text(error.message),
+            dismissButton: .default(Text(error.dismissButtonTitle))
+        )
     }
 }

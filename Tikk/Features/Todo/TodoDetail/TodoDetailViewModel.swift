@@ -37,7 +37,7 @@ extension TodoDetailViewModel {
 class TodoDetailViewModel: ObservableObject {
     @Published var title: String
 
-    let useCase: UseCase
+    private let useCase: UseCase
     private let onDelete: (Todo) -> Void
     private let onSave: (Todo) -> Void
 
@@ -79,7 +79,7 @@ extension TodoDetailViewModel {
 
 // MARK: - Helper
 
-extension Todo {
+private extension Todo {
     func withUpdatedTitle(_ newTitle: String) -> Todo {
         Todo(id: id, title: newTitle, completed: completed)
     }

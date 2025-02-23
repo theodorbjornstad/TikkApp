@@ -12,7 +12,6 @@ import FirebaseCore
 import FirebaseFirestore
 
 enum FirebaseDataServiceError: Error {
-
     case documentIDMissing
     case addDocumentFailed(Error?)
     case deleteDocumentFailed(Error?)
@@ -33,7 +32,7 @@ protocol DataService: ObservableObject {
 }
 
 class FirebaseDataService<T : FBModelType>: ObservableObject, DataService {
-    private let collectionName : String
+    private let collectionName: String
     private let store = Firestore.firestore()
 
     @Published var items: [T] = []
@@ -94,8 +93,10 @@ class FirebaseDataService<T : FBModelType>: ObservableObject, DataService {
                  .collection(self.collectionName)
                  .document(documentID)
                  .delete { error in
-                     self.handleCompletion(operationError: error,
-                                           promise: promise)
+                     self.handleCompletion(
+                        operationError: error,
+                        promise: promise
+                     )
                  }
          }
          .eraseToAnyPublisher()
@@ -113,8 +114,10 @@ class FirebaseDataService<T : FBModelType>: ObservableObject, DataService {
                      .collection(self.collectionName)
                      .document(documentID)
                      .setData(from: item) { error in
-                         self.handleCompletion(operationError: error,
-                                               promise: promise)
+                         self.handleCompletion(
+                            operationError: error,
+                            promise: promise
+                         )
                      }
              } catch {
                  promise(.failure(FirebaseDataServiceError.updateDocumentFailed(error)))
@@ -126,8 +129,10 @@ class FirebaseDataService<T : FBModelType>: ObservableObject, DataService {
 
      // MARK: - Private methods
 
-     private func handleCompletion(operationError: Error?,
-                                   promise: @escaping (Result<Void, Error>) -> Void) {
+     private func handleCompletion(
+        operationError: Error?,
+        promise: @escaping (Result<Void, Error>) -> Void
+     ) {
          if let error = operationError {
              promise(.failure(error))
          } else {

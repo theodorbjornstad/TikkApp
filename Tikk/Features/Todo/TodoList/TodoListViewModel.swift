@@ -72,7 +72,7 @@ class TodoListViewModel: ObservableObject {
     }
 }
 
-// MARK: Private functions - View Actions
+// MARK: Private functions
 
 private extension TodoListViewModel {
 
