@@ -10,11 +10,14 @@ import Combine
 
 extension TodoListViewModel {
     enum InteractionEvent {
-        case addItem(_ item: Todo)
-        case editItem(_ item: Todo)
+        case addItem(Todo)
+        case editItem(Todo)
         case createItem
-        case closeSheet
-        case toggleCompleted(_ item: Todo)
+        case toggleCompleted(Todo)
+    }
+    enum SheetInteractionEvent {
+        case save(Todo)
+        case delete(Todo)
     }
 }
 
@@ -23,7 +26,7 @@ class TodoListViewModel: ObservableObject {
     @Injected(\.todoRepository) private var todoRepository
     @Injected(\.networkMonitorService) private var networkMonitorService
 
-    @Published var sheetAction: TodoDetailViewModel.Action?
+    @Published var useCase: TodoDetailViewModel.UseCase?
     @Published var items: [Todo] = []
 
     @Published private var isOnline: Bool = true
@@ -41,10 +44,26 @@ class TodoListViewModel: ObservableObject {
             onCreateItem()
         case .toggleCompleted(let item):
             onToggleCompleted(item)
-        case .closeSheet:
-            onCloseSheet()
         case .editItem(let item):
             onEditItem(item)
+        }
+    }
+
+    func handleSheetEvent(_ event: SheetInteractionEvent) {
+        switch event {
+        case .save(let item):
+            guard let useCase else { return }
+            self.useCase = nil
+
+            switch useCase {
+            case .add:
+                performAction(todoRepository.add(item))
+            case .edit:
+                performAction(todoRepository.update(item))
+            }
+            performAction(todoRepository.update(item))
+        case .delete(let item):
+            performAction(todoRepository.delete(item))
         }
     }
 }
@@ -72,15 +91,11 @@ private extension TodoListViewModel {
     }
 
     func onCreateItem() {
-        sheetAction = .add
-    }
-
-    func onCloseSheet() {
-        sheetAction = nil
+        useCase = .add
     }
 
     func onEditItem(_ item: Todo) {
-        sheetAction = .edit(item)
+        useCase = .edit(item)
     }
 }
 
@@ -114,6 +129,8 @@ extension TodoListViewModel {
                 switch completion {
                 case .failure(let error):
                     guard let self else { return }
+
+                    // TODO: Handle error
 
                     // let errorMessage = self.firebaseErrorMessage(from: error)
                     // self.modelError = TodoListModelError(message: errorMessage)

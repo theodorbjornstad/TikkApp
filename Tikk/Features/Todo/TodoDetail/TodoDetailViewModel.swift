@@ -12,93 +12,75 @@ extension TodoDetailViewModel {
         case save
         case delete
     }
-    enum Action: AutoIdentifiable {
+
+    enum UseCase: AutoIdentifiable {
         case add
         case edit(Todo)
+
+        var initialTitle: String {
+            switch self {
+            case .add: return ""
+            case .edit(let todo): return todo.title
+            }
+        }
+
+        var existingItem: Todo? {
+            switch self {
+            case .add: return nil
+            case .edit(let todo): return todo
+            }
+        }
     }
 }
 
-@MainActor class TodoDetailViewModel: ObservableObject {
+@MainActor
+class TodoDetailViewModel: ObservableObject {
+    @Published var title: String
 
-    @Injected(\.todoRepository) private var todoRepository
-    @Published var selectedText: String
+    let useCase: UseCase
+    private let onDelete: (Todo) -> Void
+    private let onSave: (Todo) -> Void
 
-    private var item: Todo
-    private let action: Action
-    private let onCommit: () -> Void
-
-    init(action: Action, onCommit: @escaping () -> Void) {
-        self.onCommit = onCommit
-        self.action = action
-
-        switch action {
-        case .add:
-            item = .init(title: "", completed: false)
-            selectedText = ""
-        case .edit(let todo):
-            item = todo
-            selectedText = todo.title
-        }
+    init(
+        useCase: UseCase,
+        onDelete: @escaping (Todo) -> Void,
+        onSave: @escaping (Todo) -> Void
+    ) {
+        self.useCase = useCase
+        self.onDelete = onDelete
+        self.onSave = onSave
+        self.title = useCase.initialTitle
     }
 
     func handleEvent(_ event: InteractionEvent) {
         switch event {
-        case .save: onSave()
-        case .delete: onDelete()
+        case .save:
+            let todo = useCase.existingItem?.withUpdatedTitle(title) ?? Todo(title: title, completed: false)
+            onSave(todo)
+        case .delete:
+            if let todo = useCase.existingItem {
+                onDelete(todo)
+            }
         }
     }
 }
 
-// MARK: View State
+// MARK: - View State
 
 extension TodoDetailViewModel {
-
-    var placeholder: String { Asset.String.input_placeholder }
-
     var saveButtonState: CircularButton.State {
-        selectedText.isEmpty || selectedText == item.title ? .disabled : .idle
+        title.isEmpty || title == useCase.initialTitle ? .disabled : .idle
     }
 
     var showDeleteButton: Bool {
-        switch action {
-        case .add: false
-        case .edit: true
-        }
+        useCase.existingItem != nil
     }
 }
 
-// MARK: Private functions
+// MARK: - Helper
 
-extension TodoDetailViewModel {
-    func onDelete() {
-        guard case .edit(let todo) = action else {
-            return
-        }
-        do {
-            try todoRepository.delete(todo)
-        } catch {
-            // TODO: Handle error
-        }
-        onCommit()
-    }
-
-    func onSave() {
-        item.title = selectedText
-
-        switch action {
-        case .add:
-            do {
-                try todoRepository.add(item)
-            } catch {
-                // TODO: Handle error
-            }
-        case .edit:
-            do {
-                try todoRepository.update(item)
-            } catch {
-                // TODO: Handle error
-            }
-        }
-        onCommit()
+extension Todo {
+    func withUpdatedTitle(_ newTitle: String) -> Todo {
+        Todo(id: id, title: newTitle, completed: completed)
     }
 }

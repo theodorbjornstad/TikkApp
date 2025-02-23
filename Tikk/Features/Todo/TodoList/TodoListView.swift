@@ -27,7 +27,7 @@ struct TodoListView: View {
             .ignoresSafeArea(.keyboard)
             .navigationBarTitle(Asset.String.navbar_header, displayMode: .inline)
             .toolbar { toolbarIcon }
-            .sheet(item: $viewModel.sheetAction) { detailSheet($0) }
+            .sheet(item: $viewModel.useCase) { detailSheet($0) }
         }
     }
 
@@ -65,10 +65,11 @@ struct TodoListView: View {
         }
     }
 
-    private func detailSheet(_ action: TodoDetailViewModel.Action) -> some View {
+    private func detailSheet(_ useCase: TodoDetailViewModel.UseCase) -> some View {
         TodoDetailView(viewModel: .init(
-            action: action,
-            onCommit: { viewModel.handleEvent(.closeSheet) }
+            useCase: useCase,
+            onDelete: { viewModel.handleSheetEvent(.delete($0) )},
+            onSave: { viewModel.handleSheetEvent(.save($0) )}
         ))
         .presentationDetents([.height(160)])
         .presentationBackgroundInteraction(.disabled)

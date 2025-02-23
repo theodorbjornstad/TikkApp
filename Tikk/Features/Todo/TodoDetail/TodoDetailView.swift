@@ -27,7 +27,7 @@ struct TodoDetailView: View {
     }
 
     var textInput: some View {
-        TextField(viewModel.placeholder, text: $viewModel.selectedText)
+        TextField(Asset.String.input_placeholder, text: $viewModel.title)
             .frame(minHeight: 24)
     }
 
@@ -53,11 +53,4 @@ struct TodoDetailView: View {
             }
         }
     }
-}
-
-#Preview {
-    TodoDetailView(viewModel: TodoDetailViewModel(action: .add, onCommit: { }))
-        .frame(height: 140)
-        .border(.red)
-
 }
