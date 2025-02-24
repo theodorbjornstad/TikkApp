@@ -3,9 +3,15 @@
 ## Overview
 This project is a simple offline-first Todo List app built using SwiftUI and the MVVM pattern. It leverages Combine for reactive state management and Firebase Firestore as the sole database, ensuring seamless synchronization when the network is available. The app prioritizes modularity, testability, and clean architecture.
 
+## Key Features 🚀🛠️🔄
+✅ **Offline-first**: Local data storage ensures access even without an internet connection. Changes sync automatically when the network is restored.  
+✅ **State management**: Utilizes `@ObservedObject` and Combine to manage app state reactively.  
+✅ **Error handling**: Implements a structured error-handling mechanism to provide meaningful feedback to the user.  
+✅ **Dynamic UI updates**: Automatically updates UI elements
+
 ## Architecture
 The app follows the MVVM (Model-View-ViewModel) architecture, ensuring a clear separation of concerns:
-- **Model** 📄: Defines the data structures (e.g., `Todo` model) and handles business logic.
+- **Model** 📄: Defines the data structures (e.g., `Todo` model).
 - **View** 🖥️: SwiftUI-based UI components that react to state changes.
 - **ViewModel** 🎛️: Acts as an intermediary between the model and the view, handling business logic, event processing, and state management.
 - **Repository** 🗄️: Handles data persistence and acts as an abstraction layer for data sources.
@@ -53,35 +59,6 @@ The app uses the **Observer pattern** with **Combine** to ensure real-time data 
 - It doesn't directly affect data synchronization but is used in the UI to show the user their current network state.
 - The `NetworkMonitorService` is used to visualize the online/offline status, but syncing is handled automatically by Firebase.
 
-## Data Flow
-1. **User Interaction** 🎯: The user triggers an event (e.g., adding, editing, or deleting a todo item).
-2. **ViewModel Processing** 🛠️: The `TodoListViewModel` processes the event, calling the repository to modify the data.
-3. **Repository Operations** 💾: The repository interacts with `FirebaseDataService` for data operations.
-4. **DataService Execution** 🔥: The `FirebaseDataService` handles the CRUD operations and automatically syncs data with Firestore.
-5. **State Update** 🔄: The `ViewModel` receives the updated data from the repository and updates the UI accordingly.
-  
-## Observer Pattern and Reactive Chain 👀🔄📡
-- The app uses the **Observer pattern** with **Combine** for real-time data updates.
-- The repository does not directly manage data synchronization. Firebase handles syncing data automatically.
-- The `ViewModel` subscribes to changes in the repository to update the UI whenever the data changes.
-- The `NetworkMonitorService` visualizes the online/offline status, ensuring the user 
-
-## Key Features 🚀🛠️🔄
-✅ **Offline-first**: Local data storage ensures access even without an internet connection. Changes sync automatically when the network is restored.  
-✅ **State management**: Utilizes `@ObservedObject` and Combine to manage app state reactively.  
-✅ **Dependency injection**: Uses a lightweight dependency injection mechanism to improve testability and maintainability.  
-✅ **Error handling**: Implements a structured error-handling mechanism to provide meaningful feedback to the user.  
-✅ **Dynamic UI updates**: Automatically updates UI elements based on online/offline status and user interactions.  
-
-
-Technologies Used 📱🔥⚡️
-SwiftUI 🎨: Declarative UI framework.
-Combine 🔗: Used for reactive programming and state management.
-Firebase Firestore ☁️: Cloud database for data persistence and synchronization.
-Lottie 🎬: Used for smooth and engaging animations.
-Dependency Injection 🏗️: Ensures modularity and testability.
-MVVM Pattern 🏛️: Provides a scalable and testable structure.
-
 ## Testing 🧪🔍
 The app is designed with testability in mind, particularly focusing on the ViewModel, Repository, and DataService layers.
 
@@ -90,3 +67,7 @@ The app is designed with testability in mind, particularly focusing on the ViewM
 - DataService Tests: The FirebaseDataService layer can be mocked to simulate network interactions and test how the repository handles various data states (e.g., offline, online, error conditions).
 
 Future Improvements 🚀📝🔧
+- Add testing library
+- Add navigation pattern
+- Add more features
+- Dark mode
