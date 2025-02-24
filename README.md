@@ -42,7 +42,6 @@ The app uses the **Observer pattern** with **Combine** to ensure real-time data 
 
 ### Repository (`TodoRepository`) 💾🔄🔍
 - Provides an abstraction layer for data operations.
-- Uses dependency injection for testability and maintainability.
 - Communicates with `FirebaseDataService` for real-time Firestore operations.
 - Ensures that changes are reflected in the `ViewModel` by updating the UI via Combine's reactive chain.
   
