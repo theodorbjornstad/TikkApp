@@ -32,7 +32,6 @@ The app uses the **Observer pattern** with **Combine** to ensure real-time data 
 - The `ViewModel` subscribes to this publisher to receive updates when the data changes.
 - The `ViewModel` updates its properties, which causes the SwiftUI view to refresh dynamically based on the changes.
 
-
 ## Responsibilities
 
 ### ViewModel (`TodoListViewModel`) 🎯📊🛠️
